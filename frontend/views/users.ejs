@@ -46,6 +46,7 @@
           <td scope="col">${row.user_email}</td>
           <td scope="col">${row.user_password}</td>
           <td scope="col">${row.postal_code}</td>
+          <td scope="col"><i data-id={${row.user_id}} class="fa-solid fa-pen-to-square"></i></td>
         </tr>`
             });
           document.querySelector('.table').innerHTML += table;

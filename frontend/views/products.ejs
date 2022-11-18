@@ -41,20 +41,20 @@
     </div>
   </body>
   <script>
-            var data = <%- JSON.stringify(data) %>;
-
-             data.rows.forEach(row => {
-                table += ` <tr>
-          <th>${row.product_id}</th>
-          <td>${row.product_name}</td>
-        <td>${row.brand}</td>
-          <td>${row.weight}</td>
-             <td>${row.length}</td>
-                <td>${row.width}</td>
-          <td>${row.height}</td>
-        </tr>`
-            });
-          document.querySelector('.table').innerHTML += table;
-    var table=``;
+                var data = <%- JSON.stringify(data) %>;
+    console.log((data.rows))
+                 data.rows.forEach(row => {
+                    table += ` <tr>
+              <th>${row.product_id}</th>
+              <td>${row.product_name}</td>
+            <td>${row.brand}</td>
+              <td>${row.weight}</td>
+                 <td>${row.length}</td>
+                    <td>${row.width}</td>
+              <td>${row.height}</td>
+            </tr>`
+                });
+              document.querySelector('.table').innerHTML += table;
+        var table=``;
   </script>
 </html>
