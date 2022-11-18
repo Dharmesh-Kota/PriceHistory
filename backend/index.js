@@ -1,7 +1,6 @@
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
-const fetch = require("node-fetch");
 const path = require("path");
 
 const { Client } = require("pg");
@@ -14,6 +13,8 @@ app.use(bodyParser.json());
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "../frontend/views"));
 app.use(express.static("../frontend/public"));
+
+require("dotenv").config();
 
 app.get("/", (req, res) => {
   res.render("index");
