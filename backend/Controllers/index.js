@@ -45,7 +45,7 @@ const createUser = (req, res) => {
 const updateUser = (req, res) => {
   const id = req.params.id;
   const { user_password, postal_code } = req.body;
-  console.log(user_password, postal_code);
+  console.log(user_password, postal_code, id);
   pool
     .query(
       "UPDATE pricehistory.users SET user_password = $1, postal_code = $2 where user_id = $3",
@@ -85,8 +85,35 @@ const createProduct = (req, res) => {
     req.body;
   pool
     .query(
-      "insert into pricehistory.product values(proudct_id = $1, product_name = $2, brand = $3, weight = $4, length = $5, width = $6, height = $7)",
-      [product_id, product_name, brand, width, length, width, height]
+      "insert into pricehistory.product values($1, $2, $3, $4, $5,  $6,  $7)",
+      [product_id, product_name, weight, brand, width, length, height]
+    )
+    .then((response) => res.json(response))
+    .catch((err) => res.json(err));
+};
+
+const deleteProduct = (req, res) => {
+  const id = req.params.id;
+  pool
+    .query("DELETE FROM pricehistory.product WHERE product_id = $1", [id])
+    .then((response) => res.json(response))
+    .catch((err) => res.json(err));
+};
+
+const updateProduct = (req, res) => {
+  const id = req.params.id;
+  const { product_name, weight, brand, width, length, height } = req.body;
+  pool
+    .query(
+      `UPDATE pricehistory.product SET product_name = $1, 
+                                              weight = $2,
+                                              brand = $3,
+                                              width = $4,
+                                              length = $5,
+                                              height = $6
+                                              
+                                              where product_id = $7`,
+      [product_name, weight, brand, width, length, height, id]
     )
     .then((response) => res.json(response))
     .catch((err) => res.json(err));
@@ -101,4 +128,6 @@ module.exports = {
   getProuctById,
   deleteUser,
   createProduct,
+  deleteProduct,
+  updateProduct,
 };

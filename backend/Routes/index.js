@@ -10,6 +10,8 @@ const {
   updateUser,
   deleteUser,
   createProduct,
+  deleteProduct,
+  updateProduct,
 } = require("../Controllers/index");
 
 router.get("/", (req, res) => res.render("index"));
@@ -21,6 +23,7 @@ router.delete("/users/:id", deleteUser);
 router.get("/products", getProducts);
 router.get("/products/:id", getProuctById);
 router.post("/products", createProduct);
-// router.delete("/products", deleteProduct);
+router.delete("/products/:id", deleteProduct);
+router.put("/products/:id", updateProduct);
 
 module.exports = router;
