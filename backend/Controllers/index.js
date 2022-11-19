@@ -25,7 +25,10 @@ const getUserById = (req, res) => {
   console.log(id);
   pool
     .query(`SELECT * FROM pricehistory.users WHERE user_id = $1`, [id])
-    .then((results) => res.json(results.rows))
+    .then((results) => {
+      console.log("user get successfully");
+      res.json(results.rows);
+    })
     .catch((err) => res.json(err));
 };
 
@@ -38,7 +41,10 @@ const createUser = (req, res) => {
       user_password,
       postal_code,
     ])
-    .then((response) => res.json(response))
+    .then((response) => {
+      console.log("new user created successfully");
+      res.json(response);
+    })
     .catch((err) => res.json(err));
 };
 
@@ -51,7 +57,10 @@ const updateUser = (req, res) => {
       "UPDATE pricehistory.users SET user_password = $1, postal_code = $2 where user_id = $3",
       [user_password, postal_code, id]
     )
-    .then((response) => res.json(response))
+    .then((response) => {
+      console.log("user updated successfully");
+      res.json(response);
+    })
     .catch((err) => res.json(err));
 };
 
@@ -59,7 +68,10 @@ const deleteUser = (req, res) => {
   const id = req.params.id;
   pool
     .query("DELETE FROM pricehistory.users where user_id = $1", [id])
-    .then((response) => res.json(response))
+    .then((response) => {
+      console.log("user deleted successfully");
+      res.json(response);
+    })
     .catch((err) => res.json(err));
 };
 
@@ -67,16 +79,20 @@ const getProducts = (req, res) => {
   pool
     .query(`select * from pricehistory.product`)
     .then((results) => {
+      console.log("products get successfully");
       res.render("products", { data: results });
     })
-    .catch((e) => console.log(e));
+    .catch((e) => res.json(e));
 };
 
 const getProuctById = (req, res) => {
   const id = req.params.id;
   pool
     .query("select * from pricehistory.product where product_id = $1", id)
-    .then((response) => res.json(response))
+    .then((response) => {
+      console.log("product get successfully");
+      res.json(response);
+    })
     .catch((err) => res.json(err));
 };
 
@@ -88,7 +104,10 @@ const createProduct = (req, res) => {
       "insert into pricehistory.product values($1, $2, $3, $4, $5,  $6,  $7)",
       [product_id, product_name, weight, brand, width, length, height]
     )
-    .then((response) => res.json(response))
+    .then((response) => {
+      console.log("product created successfully");
+      res.json(response);
+    })
     .catch((err) => res.json(err));
 };
 
@@ -96,7 +115,10 @@ const deleteProduct = (req, res) => {
   const id = req.params.id;
   pool
     .query("DELETE FROM pricehistory.product WHERE product_id = $1", [id])
-    .then((response) => res.json(response))
+    .then((response) => {
+      console.log("product deleted successfully");
+      res.json(response);
+    })
     .catch((err) => res.json(err));
 };
 
@@ -115,7 +137,10 @@ const updateProduct = (req, res) => {
                                               where product_id = $7`,
       [product_name, weight, brand, width, length, height, id]
     )
-    .then((response) => res.json(response))
+    .then((response) => {
+      console.log("product updated successfully");
+      res.json(response);
+    })
     .catch((err) => res.json(err));
 };
 

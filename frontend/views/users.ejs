@@ -26,15 +26,15 @@
     <!-- Modal -->
     <div
       class="modal fade"
-      id="exampleModal"
+      id="editModal"
       tabindex="-1"
-      aria-labelledby="exampleModalLabel"
+      aria-labelledby="editModalLabel"
       aria-hidden="true"
     >
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content p-5">
           <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">Edit User</h1>
+            <h1 class="modal-title fs-5" id="editModalLabel">Edit User</h1>
             <button
               type="button"
               class="btn-close"
@@ -100,6 +100,8 @@
             <th scope="col">User Email</th>
             <th scope="col">User Password</th>
             <th scope="col">User Postal Code</th>
+            <th scope="col">Edit User</th>
+            <th scope="col">Delete User</th>
           </tr>
         </thead>
       </table>
@@ -122,20 +124,24 @@
     }
                 var data = <%- JSON.stringify(data) %>;
                 console.log(data.rows)
-                 data.rows.forEach(row => {
-                    table += ` <tr>
+                var table=``;
+                data.rows.forEach(row => {
+                    table +=
+                    `<tr>
               <th scope="col">${row.user_id}</th>
               <td scope="col">${row.user_email}</td>
               <td scope="col">${row.user_password}</td>
               <td scope="col">${row.postal_code}</td>
-              <td scope="col"><button type="button" data-user=${row.user_id} class="btn btn-primary btn-modal" data-bs-toggle="modal" data-bs-target="#exampleModal">
-      <i data-user=${row.user_id}   class="fa-solid fa-pen-to-square btn-modal"></i>
-    </button>
-    </td>
+              <td scope="col"><button type="button" data-user=${row.user_id} class="btn btn-primary btn-modal" data-bs-toggle="modal" data-bs-target="#editModal">
+                  <i data-user=${row.user_id} class="fa-solid fa-pen-to-square btn-modal"></i>
+              </button>
+              </td>
+              <td scope="col">
+                 <i role="button" data-user=${row.user_id} class="fa-solid fa-trash text-danger btn-delete p-2" ></i>
+              </td>
             </tr>`
                 });
               document.querySelector('.table').innerHTML += table;
-        var table=``;
         var response = {};
         document.querySelectorAll('.btn-modal').forEach((row)=>row.addEventListener('click', (e)=>{
           let obj = undefined;
@@ -170,6 +176,24 @@
             else {
               alert('Password and Postal code must be non empty')
             }
+        })
+
+        document.querySelectorAll('.btn-delete').forEach((row)=>{
+          row.addEventListener('click', (e)=>{
+             const id = e.target.dataset.user;
+              if(confirm(`Are you sure you want to delete this user ${id}?`))
+              {
+                  fetch(`http://localhost:3000/users/${id}`, {
+                    method :"delete",
+                    headers:{
+                      'Content-type' :"application/json"
+                    }
+                  }).then((response)=>{
+                    console.log(response);
+                    alert(`User ${id} deleted successfully`);
+                  })
+              }
+          })
         })
   </script>
 </html>
