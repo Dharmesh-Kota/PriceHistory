@@ -34,6 +34,7 @@ const getUserById = (req, res) => {
 
 const createUser = (req, res) => {
   const { user_id, user_email, user_password, postal_code } = req.body;
+  console.log(req.body);
   pool
     .query("INSERT into pricehistory.users VALUES($1, $2, $3, $4)", [
       user_id,
@@ -43,7 +44,7 @@ const createUser = (req, res) => {
     ])
     .then((response) => {
       console.log("new user created successfully");
-      res.json(response);
+      res.redirect("/users");
     })
     .catch((err) => res.json(err));
 };
@@ -59,7 +60,7 @@ const updateUser = (req, res) => {
     )
     .then((response) => {
       console.log("user updated successfully");
-      res.json(response);
+      res.redirect("/users");
     })
     .catch((err) => res.json(err));
 };
@@ -70,14 +71,14 @@ const deleteUser = (req, res) => {
     .query("DELETE FROM pricehistory.users where user_id = $1", [id])
     .then((response) => {
       console.log("user deleted successfully");
-      res.json(response);
+      res.redirect("/users");
     })
     .catch((err) => res.json(err));
 };
 
 const getProducts = (req, res) => {
   pool
-    .query(`select * from pricehistory.product`)
+    .query(`select * from pricehistory.product order by product_id asc`)
     .then((results) => {
       console.log("products get successfully");
       res.render("products", { data: results });
@@ -106,7 +107,7 @@ const createProduct = (req, res) => {
     )
     .then((response) => {
       console.log("product created successfully");
-      res.json(response);
+      res.redirect("/products");
     })
     .catch((err) => res.json(err));
 };
@@ -117,7 +118,7 @@ const deleteProduct = (req, res) => {
     .query("DELETE FROM pricehistory.product WHERE product_id = $1", [id])
     .then((response) => {
       console.log("product deleted successfully");
-      res.json(response);
+      res.redirect("/products");
     })
     .catch((err) => res.json(err));
 };
@@ -139,7 +140,7 @@ const updateProduct = (req, res) => {
     )
     .then((response) => {
       console.log("product updated successfully");
-      res.json(response);
+      res.redirect("/products");
     })
     .catch((err) => res.json(err));
 };
