@@ -12,6 +12,8 @@ const {
   createProduct,
   deleteProduct,
   updateProduct,
+  getQuery,
+  runQuery,
 } = require("../Controllers/index");
 
 router.get("/", (req, res) => res.render("index"));
@@ -25,5 +27,7 @@ router.get("/products/:id", getProuctById);
 router.post("/products", createProduct);
 router.delete("/products/:id", deleteProduct);
 router.put("/products/:id", updateProduct);
+router.get("/queries", getQuery);
+router.post("/queries", runQuery);
 
 module.exports = router;

@@ -4,9 +4,52 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Queries</title>
   </head>
   <body>
     <%- include("./partials/Navbar.ejs") %>
+    <div class="container-fluid w-50 my-5">
+      <form action="/queries" method="post">
+        <div class="form-floating">
+          <textarea
+            class="form-control"
+            placeholder="Leave a comment here"
+            id="floatingTextarea"
+            style="height: 200px"
+            name="query"
+          ></textarea>
+          <label for="floatingTextarea">Write Your Query Here</label>
+        </div>
+        <button class="btn-primary btn my-5" type="submit">Run Query</button>
+      </form>
+    </div>
+
+    <div class="container-fluid w-75">
+      <table class="table">
+        <thead class="bg-info">
+          <tr></tr>
+        </thead>
+      </table>
+    </div>
   </body>
+  <script>
+    var data = <%- JSON.stringify(data) %>;
+    const fields = data.fields;
+    fields.forEach((field) => {
+      document.querySelector('.table thead tr').innerHTML += `<td>${field.name}</td>`;
+    });
+    data.rows.forEach((row)=>{
+      console.log(row['user_id'])
+      var tablerow = [];
+      var tabledata=``;
+       for(let i of fields)
+       tablerow.push(i.name)
+       for(let i of tablerow)
+       tabledata += `<td>${row[i]}</td>`
+       console.log(tablerow)
+      document.querySelector('.table').innerHTML += `<tr>
+                                                     ${tabledata}
+                                                    </tr>`
+    })
+  </script>
 </html>

@@ -8,6 +8,7 @@ const connectOptions = {
   password: process.env.PASSWORD,
   database: process.env.DATABASE,
 };
+
 const pool = new Pool(connectOptions);
 
 const getUsers = (req, res) => {
@@ -145,6 +146,18 @@ const updateProduct = (req, res) => {
     .catch((err) => res.json(err));
 };
 
+const getQuery = (req, res) => {
+  res.render("queries", { data: {} });
+};
+
+const runQuery = (req, res) => {
+  // console.log(req.body);
+  pool
+    .query(`${req.body.query}`)
+    .then((response) => res.render("queries", { data: response }))
+    .catch((err) => res.json(err));
+};
+
 module.exports = {
   getUsers,
   getUserById,
@@ -156,4 +169,6 @@ module.exports = {
   createProduct,
   deleteProduct,
   updateProduct,
+  getQuery,
+  runQuery,
 };
