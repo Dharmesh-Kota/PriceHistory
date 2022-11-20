@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const {
+  getHome,
   getUsers,
   getProuctById,
   getProducts,
@@ -16,7 +17,7 @@ const {
   runQuery,
 } = require("../Controllers/index");
 
-router.get("/", (req, res) => res.render("index"));
+router.get("/", getHome);
 router.get("/users", getUsers);
 router.get("/users/:id", getUserById);
 router.post("/users", createUser);

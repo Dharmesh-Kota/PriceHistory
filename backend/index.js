@@ -21,12 +21,4 @@ const indexRoutes = require("./Routes/index");
 app.use(express.json());
 app.use(indexRoutes);
 
-app.get("/", (req, res) => {
-  res.render("index");
-});
-
-app.get("/queries", (req, res) => {
-  res.render("queries");
-});
-
 app.listen(port, () => console.log("Server Listening on PORT ", port));

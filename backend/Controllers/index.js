@@ -11,6 +11,46 @@ const connectOptions = {
 
 const pool = new Pool(connectOptions);
 
+const getHome = (req, res) => {
+  var data = [];
+  pool
+    .query(
+      "Select product_id, avg(rating) From pricehistory.rating group by product_id order by product_id ASC"
+    )
+    .then((response) => {
+      pool
+        .query(
+          "SELECT product_id, product_name FROM pricehistory.product where product_id = (select product_id from pricehistory.buys group by product_id order by count(product_id) DESC limit 1);"
+        )
+        .then((response2) => {
+          pool
+            .query(
+              "SELECT product_id, min(price) as min_price, max(price) as max_price FROM pricehistory.product_price group by product_id order by product_id ASC;"
+            )
+            .then((response3) => {
+              res.render("index", {
+                data: {
+                  res1: response.rows,
+                  res2: response2.rows,
+                  res3: response3.rows,
+                },
+              });
+            });
+        });
+    })
+    .catch((err) => res.json(err));
+
+  // pool
+  //   .query("select * from pricehistory.users")
+  //   .then((response) => {
+  //     data.push(response);
+  //   })
+  //   .catch((err) => res.json(err));
+
+  // console.log(data);
+  // res.render("index", { data: data });
+};
+
 const getUsers = (req, res) => {
   pool
     .query(`select * from pricehistory.users order by user_id asc`)
@@ -159,6 +199,7 @@ const runQuery = (req, res) => {
 };
 
 module.exports = {
+  getHome,
   getUsers,
   getUserById,
   createUser,

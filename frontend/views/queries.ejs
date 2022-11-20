@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Queries</title>
+    <link rel="stylesheet" href="./css/products.css" />
   </head>
   <body>
     <%- include("./partials/Navbar.ejs") %>
@@ -39,14 +40,12 @@
       document.querySelector('.table thead tr').innerHTML += `<td>${field.name}</td>`;
     });
     data.rows.forEach((row)=>{
-      console.log(row['user_id'])
       var tablerow = [];
       var tabledata=``;
        for(let i of fields)
        tablerow.push(i.name)
        for(let i of tablerow)
        tabledata += `<td>${row[i]}</td>`
-       console.log(tablerow)
       document.querySelector('.table').innerHTML += `<tr>
                                                      ${tabledata}
                                                     </tr>`

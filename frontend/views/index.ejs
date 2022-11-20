@@ -6,26 +6,115 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Price History</title>
     <link rel="stylesheet" href="/css/index.css" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
-      crossorigin="anonymous"
-    />
   </head>
 
   <body>
     <%- include("./partials/Navbar.ejs") %>
-    <div class="main-caontainer">hello we are price history</div>
-    <script
-      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
-      integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
-      integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
-      crossorigin="anonymous"
-    ></script>
+
+    <div class="container-fluid w-75 my-5 text-center lead">
+      <div class="row">
+        <div
+          class="col-xs-12 p-3 max-selling-product alert alert-primary"
+        ></div>
+        <div class="col-xs-12 my-3">
+          <h3 class="text-primary text-center">
+            Average Ratings of all listed products
+          </h3>
+
+          <div id="avg-rating-chart"></div>
+        </div>
+        <div class="col-xs-12 my-3">
+          <h3 class="text-primary text-center">Min-Max prices of products</h3>
+
+          <div id="min-max-chart"></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+              var jsonData = <%- JSON.stringify(data) %>;
+
+              document.querySelector('.max-selling-product').innerHTML+=`The maximum sold product in our website is <strong>${jsonData.res2[0].product_name} with product id ${jsonData.res2[0].product_id}</strong>`
+
+              google.charts.load('current', {packages: ['corechart', 'line']});
+        google.charts.setOnLoadCallback(drawBackgroundColor);
+          google.charts.setOnLoadCallback(drawCurveTypes);
+
+        function drawBackgroundColor() {
+              var data = new google.visualization.DataTable();
+              data.addColumn('string', 'product');
+              data.addColumn('number', 'rating')
+
+              console.log(jsonData)
+
+          jsonData.res1.forEach(function (jsonRow, indexRow) {
+
+            // add row
+            var dataRow = [];
+            for (var column in jsonRow) {
+              if (column === "product_id") {
+                dataRow.push(jsonRow[column]);
+              } else {
+                // convert string to number
+                dataRow.push(Number(jsonRow[column]));
+              }
+            }
+            if (dataRow.length > 0) {
+              data.addRow(dataRow);
+            }
+          });
+
+          var options = {
+            hAxis: {
+              title: "Product ID's",
+            },
+            vAxis: {
+              title: "Average Rating",
+            },
+             backgroundColor: '#f1f8e9'
+          };
+              var chart = new google.visualization.LineChart(document.getElementById('avg-rating-chart'));
+              chart.draw(data, options);
+            }
+
+            function drawCurveTypes() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'X');
+        data.addColumn('number', 'min-price');
+        data.addColumn('number', 'max-price');
+
+         jsonData.res3.forEach(function (jsonRow, indexRow) {
+
+            // add row
+            var dataRow = [];
+            for (var column in jsonRow) {
+              if (column === "product_id") {
+                dataRow.push(jsonRow[column]);
+              } else {
+                // convert string to number
+                dataRow.push(Number(jsonRow[column]));
+              }
+            }
+            if (dataRow.length > 0) {
+              data.addRow(dataRow);
+            }
+          });
+
+        var options = {
+          hAxis: {
+            title: 'product ID'
+          },
+          vAxis: {
+            title: 'min-max prices'
+          },
+          series: {
+            1: {curveType: 'function'}
+          },
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('min-max-chart'));
+        chart.draw(data, options);
+      }
+    </script>
   </body>
 </html>
