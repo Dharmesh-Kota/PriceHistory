@@ -27,6 +27,15 @@
         class="bg-success query-msg p-3 rounded-3 border border-3 border-dark text-light font-weight-bold text-center"
       ></h4>
     </div>
+    <button
+      onclick="topFunction()"
+      style="right: 2em; bottom: 6em; display: none"
+      class="btn btn-info text-light position-fixed"
+      id="myBtn"
+      title="Go to top"
+    >
+      <i class="fa-solid fa-chevron-up"></i>
+    </button>
 
     <div class="container-fluid w-75">
       <table class="table">
@@ -37,24 +46,104 @@
     </div>
   </body>
   <script>
-    var data = <%- JSON.stringify(data) %>;
-    console.log(data)
-    if(data.query)
-    document.querySelector('.query-msg').innerHTML+=data.query
-    const fields = data.resp.fields;
-    fields.forEach((field) => {
-      document.querySelector('.table thead tr').innerHTML += `<td>${field.name}</td>`;
-    });
-    data.resp.rows.forEach((row)=>{
-      var tablerow = [];
-      var tabledata=``;
-       for(let i of fields)
-       tablerow.push(i.name)
-       for(let i of tablerow)
-       tabledata += `<td>${row[i]}</td>`
-      document.querySelector('.table').innerHTML += `<tr>
-                                                     ${tabledata}
-                                                    </tr>`
-    })
+
+        function sortTable(n) {
+                        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+                        table = document.querySelector('.table');
+                        switching = true;
+                        // Set the sorting direction to ascending:
+                        dir = "asc";
+                        /* Make a loop that will continue until
+                        no switching has been done: */
+                        while (switching) {
+                        // Start by saying: no switching is done:
+                        switching = false;
+                        rows = table.rows;
+                        /* Loop through all table rows (except the
+                        first, which contains table headers): */
+                        for (i = 1; i < (rows.length - 1); i++) {
+                          // Start by saying there should be no switching:
+                          shouldSwitch = false;
+                          /* Get the two elements you want to compare,
+                          one from current row and one from the next: */
+                          x = rows[i].getElementsByTagName("TD")[n];
+                          y = rows[i + 1].getElementsByTagName("TD")[n];
+                          /* Check if the two rows should switch place,
+                          based on the direction, asc or desc: */
+                          if (dir == "asc") {
+                            if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                              // If so, mark as a switch and break the loop:
+                              shouldSwitch = true;
+                              break;
+                            }
+                          } else if (dir == "desc") {
+                            if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                              // If so, mark as a switch and break the loop:
+                              shouldSwitch = true;
+                              break;
+                            }
+                          }
+                        }
+                        if (shouldSwitch) {
+                          /* If a switch has been marked, make the switch
+                          and mark that a switch has been done: */
+                          rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                          switching = true;
+                          // Each time a switch is done, increase this count by 1:
+                          switchcount ++;
+                        } else {
+                          /* If no switching has been done AND the direction is "asc",
+                          set the direction to "desc" and run the while loop again. */
+                          if (switchcount == 0 && dir == "asc") {
+                            dir = "desc";
+                            switching = true;
+                          }
+                        }
+                      }
+                    }
+
+
+            var data = <%- JSON.stringify(data) %>;
+            console.log(data)
+            if(data.query)
+            document.querySelector('.query-msg').innerHTML+=data.query
+            const fields = data.resp.fields;
+            fields.forEach((field, index) => {
+              document.querySelector('.table thead tr').innerHTML += `<th onclick="sortTable(${index})">${field.name}</th>`;
+            });
+
+
+            data.resp.rows.forEach((row)=>{
+              var tablerow = [];
+              var tabledata=``;
+               for(let i of fields)
+               tablerow.push(i.name)
+               for(let i of tablerow)
+               tabledata += `<td>${row[i]}</td>`
+              document.querySelector('.table').innerHTML += `<tr>
+                                                             ${tabledata}
+                                                            </tr>`
+            })
+
+
+               // scroll to top
+        let mybutton = document.getElementById("myBtn");
+
+    // When the user scrolls down 20px from the top of the document, show the button
+    window.onscroll = function() {scrollFunction()};
+
+    function scrollFunction() {
+      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        mybutton.style.display = "block";
+      } else {
+        mybutton.style.display = "none";
+      }
+    }
+
+    // When the user clicks on the button, scroll to the top of the document
+    function topFunction() {
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+    }
   </script>
 </html>

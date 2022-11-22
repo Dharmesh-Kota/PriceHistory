@@ -16,9 +16,19 @@
       class="btn btn-primary btn-insert-modal position-fixed"
       data-bs-toggle="modal"
       data-bs-target="#insertModal"
-      style="right: 2em; bottom: 2em"
+      style="right: 2em; bottom: 2em; display: none"
     >
       <i class="fa-solid fa-plus btn-insert-modal"></i>
+    </button>
+
+    <button
+      onclick="topFunction()"
+      style="right: 2em; bottom: 6em"
+      class="btn btn-info text-light position-fixed"
+      id="myBtn"
+      title="Go to top"
+    >
+      <i class="fa-solid fa-chevron-up"></i>
     </button>
 
     <form action="/products" method="post">
@@ -279,158 +289,179 @@
   </body>
 
   <script>
-                var data = <%- JSON.stringify(data) %>;
+                    var data = <%- JSON.stringify(data) %>;
 
-                var table=``;
-    console.log((data.rows))
-                 data.rows.forEach(row => {
-                    table += `<tr>
-              <th>${row.product_id}</th>
-              <td>${row.product_name}</td>
-            <td>${row.brand}</td>
-              <td>${row.weight}</td>
-                 <td>${row.length}</td>
-                    <td>${row.width}</td>
-              <td>${row.height}</td>
-               <td scope="col"><button type="button" data-product=${row.product_id} class="btn btn-primary btn-modal" data-bs-toggle="modal" data-bs-target="#editModal">
-                <i data-product=${row.product_id} class="fa-solid fa-pen-to-square btn-modal"></i>
-              </button>
-              </td>
-              <td scope="col">
-                <i role="button" data-product=${row.product_id} class="fa-solid fa-trash text-danger btn-delete p-2" ></i>
-              </td>
-            </tr>`
-                });
+                    var table=``;
+        console.log((data.rows))
+                     data.rows.forEach(row => {
+                        table += `<tr>
+                  <th>${row.product_id}</th>
+                  <td>${row.product_name}</td>
+                <td>${row.brand}</td>
+                  <td>${row.weight}</td>
+                     <td>${row.length}</td>
+                        <td>${row.width}</td>
+                  <td>${row.height}</td>
+                   <td scope="col"><button type="button" data-product=${row.product_id} class="btn btn-primary btn-modal" data-bs-toggle="modal" data-bs-target="#editModal">
+                    <i data-product=${row.product_id} class="fa-solid fa-pen-to-square btn-modal"></i>
+                  </button>
+                  </td>
+                  <td scope="col">
+                    <i role="button" data-product=${row.product_id} class="fa-solid fa-trash text-danger btn-delete p-2" ></i>
+                  </td>
+                </tr>`
+                    });
 
-              function sortTable(n) {
-                var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-                table = document.querySelector('.table');
-                switching = true;
-                // Set the sorting direction to ascending:
-                dir = "asc";
-                /* Make a loop that will continue until
-                no switching has been done: */
-                while (switching) {
-                // Start by saying: no switching is done:
-                switching = false;
-                rows = table.rows;
-                /* Loop through all table rows (except the
-                first, which contains table headers): */
-                for (i = 1; i < (rows.length - 1); i++) {
-                  // Start by saying there should be no switching:
-                  shouldSwitch = false;
-                  /* Get the two elements you want to compare,
-                  one from current row and one from the next: */
-                  x = rows[i].getElementsByTagName("TD")[n];
-                  y = rows[i + 1].getElementsByTagName("TD")[n];
-                  /* Check if the two rows should switch place,
-                  based on the direction, asc or desc: */
-                  if (dir == "asc") {
-                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-                      // If so, mark as a switch and break the loop:
-                      shouldSwitch = true;
-                      break;
-                    }
-                  } else if (dir == "desc") {
-                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-                      // If so, mark as a switch and break the loop:
-                      shouldSwitch = true;
-                      break;
-                    }
-                  }
-                }
-                if (shouldSwitch) {
-                  /* If a switch has been marked, make the switch
-                  and mark that a switch has been done: */
-                  rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-                  switching = true;
-                  // Each time a switch is done, increase this count by 1:
-                  switchcount ++;
-                } else {
-                  /* If no switching has been done AND the direction is "asc",
-                  set the direction to "desc" and run the while loop again. */
-                  if (switchcount == 0 && dir == "asc") {
-                    dir = "desc";
+                  function sortTable(n) {
+                    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+                    table = document.querySelector('.table');
                     switching = true;
-                  }
-                }
-              }
-            }
-
-
-
-
-
-              document.querySelector('.table').innerHTML += table;
-
-                var response = {};
-                document.querySelectorAll('.btn-modal').forEach((row)=>row.addEventListener('click', (e)=>{
-                  console.log(e.target)
-                  let obj = undefined;
-                  data.rows.forEach((row)=> {
-                    if(row.product_id === e.target.dataset.product)
-                    {
-                      obj = row;
-                      return;
-                    }
-                  })
-                  response = obj;
-                  document.querySelector('#product_id').value = obj.product_id
-                  document.querySelector("#product_name").value = obj.product_name
-                  document.querySelector("#weight").value = obj.weight;
-                  document.querySelector("#brand").value = obj.brand;
-                  document.querySelector("#width").value = obj.width;
-                  document.querySelector("#length").value = obj.length;
-                  document.querySelector("#height").value = obj.height;
-                }))
-
-                 document.querySelector('.submit-btn').addEventListener('click', ()=> {
-                  response.product_name = document.querySelector('#product_name').value;
-                  response.weight = document.querySelector('#weight').value;
-                  response.brand = document.querySelector('#brand').value;
-                  response.width = document.querySelector('#width').value;
-                  response.length = document.querySelector('#length').value;
-                  response.height = document.querySelector('#height').value;
-                  if(response.product_name!=='' &&  response.weight!=='' && response.brand!==''&& response.width!==''&&  response.length!=='' &&  response.height!=='')
-                  {
-                    fetch(`http://localhost:3000/products/${response.product_id}`, {
-                    method: 'PUT',
-                      headers: {
-                        'Content-type': 'application/json'
-                      },
-                      body: JSON.stringify(response)
-                    })
-                      if(!(alert(`Product ${response.product_id} updated successfully`)))
-                      {
-                        location.reload()
+                    // Set the sorting direction to ascending:
+                    dir = "asc";
+                    /* Make a loop that will continue until
+                    no switching has been done: */
+                    while (switching) {
+                    // Start by saying: no switching is done:
+                    switching = false;
+                    rows = table.rows;
+                    /* Loop through all table rows (except the
+                    first, which contains table headers): */
+                    for (i = 1; i < (rows.length - 1); i++) {
+                      // Start by saying there should be no switching:
+                      shouldSwitch = false;
+                      /* Get the two elements you want to compare,
+                      one from current row and one from the next: */
+                      x = rows[i].getElementsByTagName("TD")[n];
+                      y = rows[i + 1].getElementsByTagName("TD")[n];
+                      /* Check if the two rows should switch place,
+                      based on the direction, asc or desc: */
+                      if (dir == "asc") {
+                        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                          // If so, mark as a switch and break the loop:
+                          shouldSwitch = true;
+                          break;
+                        }
+                      } else if (dir == "desc") {
+                        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                          // If so, mark as a switch and break the loop:
+                          shouldSwitch = true;
+                          break;
+                        }
                       }
                     }
-                    else {
-                      alert('All fields must be non empty')
+                    if (shouldSwitch) {
+                      /* If a switch has been marked, make the switch
+                      and mark that a switch has been done: */
+                      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                      switching = true;
+                      // Each time a switch is done, increase this count by 1:
+                      switchcount ++;
+                    } else {
+                      /* If no switching has been done AND the direction is "asc",
+                      set the direction to "desc" and run the while loop again. */
+                      if (switchcount == 0 && dir == "asc") {
+                        dir = "desc";
+                        switching = true;
+                      }
                     }
-                })
+                  }
+                }
 
 
-               document.querySelectorAll('.btn-delete').forEach((row)=>{
-                row.addEventListener('click', (e)=>{
-                  const id = e.target.dataset.user;
-                  console.log(id);
-                    if(confirm(`Are you sure you want to delete this product ${id}?`))
-                    {
-                        fetch(`http://localhost:3000/products/${id}`, {
-                          method :"delete",
-                          headers:{
-                            'Content-type' :"application/json"
-                          }
-                        }).then((response)=>{
-                          console.log(response);
-                          if(confirm(`Product ${id} deleted successfully`))
-                          {
-                            location.reload();
-                          }
+
+
+
+                  document.querySelector('.table').innerHTML += table;
+
+                    var response = {};
+                    document.querySelectorAll('.btn-modal').forEach((row)=>row.addEventListener('click', (e)=>{
+                      console.log(e.target)
+                      let obj = undefined;
+                      data.rows.forEach((row)=> {
+                        if(row.product_id === e.target.dataset.product)
+                        {
+                          obj = row;
+                          return;
+                        }
+                      })
+                      response = obj;
+                      document.querySelector('#product_id').value = obj.product_id
+                      document.querySelector("#product_name").value = obj.product_name
+                      document.querySelector("#weight").value = obj.weight;
+                      document.querySelector("#brand").value = obj.brand;
+                      document.querySelector("#width").value = obj.width;
+                      document.querySelector("#length").value = obj.length;
+                      document.querySelector("#height").value = obj.height;
+                    }))
+
+                     document.querySelector('.submit-btn').addEventListener('click', ()=> {
+                      response.product_name = document.querySelector('#product_name').value;
+                      response.weight = document.querySelector('#weight').value;
+                      response.brand = document.querySelector('#brand').value;
+                      response.width = document.querySelector('#width').value;
+                      response.length = document.querySelector('#length').value;
+                      response.height = document.querySelector('#height').value;
+                      if(response.product_name!=='' &&  response.weight!=='' && response.brand!==''&& response.width!==''&&  response.length!=='' &&  response.height!=='')
+                      {
+                        fetch(`http://localhost:3000/products/${response.product_id}`, {
+                        method: 'PUT',
+                          headers: {
+                            'Content-type': 'application/json'
+                          },
+                          body: JSON.stringify(response)
                         })
-                    }
-                })
-              })
+                          if(!(alert(`Product ${response.product_id} updated successfully`)))
+                          {
+                            location.reload()
+                          }
+                        }
+                        else {
+                          alert('All fields must be non empty')
+                        }
+                    })
+
+
+                   document.querySelectorAll('.btn-delete').forEach((row)=>{
+                    row.addEventListener('click', (e)=>{
+                      const id = e.target.dataset.user;
+                      console.log(id);
+                        if(confirm(`Are you sure you want to delete this product ${id}?`))
+                        {
+                            fetch(`http://localhost:3000/products/${id}`, {
+                              method :"delete",
+                              headers:{
+                                'Content-type' :"application/json"
+                              }
+                            }).then((response)=>{
+                              console.log(response);
+                              if(confirm(`Product ${id} deleted successfully`))
+                              {
+                                location.reload();
+                              }
+                            })
+                        }
+                    })
+                  })
+
+
+                     // scroll to top
+        let mybutton = document.getElementById("myBtn");
+
+    // When the user scrolls down 20px from the top of the document, show the button
+    window.onscroll = function() {scrollFunction()};
+
+    function scrollFunction() {
+      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        mybutton.style.display = "block";
+      } else {
+        mybutton.style.display = "none";
+      }
+    }
+
+    // When the user clicks on the button, scroll to the top of the document
+    function topFunction() {
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+    }
   </script>
 </html>
