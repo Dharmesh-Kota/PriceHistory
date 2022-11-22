@@ -17,12 +17,29 @@
       data-bs-toggle="modal"
       data-bs-target="#insertModal"
       title="Create new user"
-      style="right: 2em; bottom: 2em"
+      style="right: 2em; bottom: 3.5em"
     >
       <i class="fa-solid fa-plus btn-insert-modal"></i>
     </button>
 
-<button onclick="topFunction()" style="right: 2em; bottom: 6em; display: none;" class="btn btn-info text-light position-fixed" id="myBtn" title="Go to top"><i class="fa-solid fa-chevron-up"></i></button>
+    <button
+      onclick="topFunction()"
+      style="right: 2em; bottom: 6em; display: none"
+      class="btn btn-dark text-light position-fixed shadow-lg"
+      id="myBtn"
+      title="Go to top"
+    >
+      <i class="fa-solid fa-chevron-up"></i>
+    </button>
+
+    <button
+      onclick="bottomFunction()"
+      style="right: 2em; bottom: 1em"
+      class="btn btn-dark text-light position-fixed shadow-lg"
+      id="myBtn2"
+      title="Go to bottom"
+    ><i class="fa-solid fa-chevron-down"></i>
+    </button>
 
     <form action="/users" method="post">
       <!-- Modal to create user -->
@@ -175,7 +192,7 @@
 
     <div class="container-fluid w-75 my-5">
       <table class="table">
-        <thead class="bg-primary">
+        <thead class="bg-dark text-light">
           <tr>
             <th onclick="sortTable(0)" scope="col">User ID</th>
             <th onclick="sortTable(1)" scope="col">User Email</th>
@@ -330,24 +347,32 @@
       })
     })
 
-    // scroll to top 
-    let mybutton = document.getElementById("myBtn");
+           // scroll to top
+        let mybutton = document.getElementById("myBtn");
+        let mybutton2 = document.getElementById('myBtn2')
 
-// When the user scrolls down 20px from the top of the document, show the button
-window.onscroll = function() {scrollFunction()};
+    // When the user scrolls down 20px from the top of the document, show the button
+    window.onscroll = function() {scrollFunction()};
 
-function scrollFunction() {
-  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-    mybutton.style.display = "block";
-  } else {
-    mybutton.style.display = "none";
-  }
-}
+    function scrollFunction() {
+      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        mybutton.style.display = "block";
+        mybutton2.style.display = "none";
+      } else {
+        mybutton.style.display = "none";
+        mybutton2.style.display = "block";
+      }
+    }
 
 // When the user clicks on the button, scroll to the top of the document
 function topFunction() {
-  document.body.scrollTop = 0;
-  document.documentElement.scrollTop = 0;
-}
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+    }
+
+     function bottomFunction() {
+      document.body.scrollTop = 10024;
+      document.documentElement.scrollTop = 10024;
+    }
   </script>
 </html>
