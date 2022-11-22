@@ -23,6 +23,9 @@
         </div>
         <button class="btn-primary btn my-5" type="submit">Run Query</button>
       </form>
+      <h4
+        class="bg-success query-msg p-3 rounded-3 border border-3 border-dark text-light font-weight-bold text-center"
+      ></h4>
     </div>
 
     <div class="container-fluid w-75">
@@ -35,11 +38,14 @@
   </body>
   <script>
     var data = <%- JSON.stringify(data) %>;
-    const fields = data.fields;
+    console.log(data)
+    if(data.query)
+    document.querySelector('.query-msg').innerHTML+=data.query
+    const fields = data.resp.fields;
     fields.forEach((field) => {
       document.querySelector('.table thead tr').innerHTML += `<td>${field.name}</td>`;
     });
-    data.rows.forEach((row)=>{
+    data.resp.rows.forEach((row)=>{
       var tablerow = [];
       var tabledata=``;
        for(let i of fields)

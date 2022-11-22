@@ -1,4 +1,3 @@
-const { response } = require("express");
 const { Pool } = require("pg");
 
 const connectOptions = {
@@ -39,16 +38,6 @@ const getHome = (req, res) => {
         });
     })
     .catch((err) => res.json(err));
-
-  // pool
-  //   .query("select * from pricehistory.users")
-  //   .then((response) => {
-  //     data.push(response);
-  //   })
-  //   .catch((err) => res.json(err));
-
-  // console.log(data);
-  // res.render("index", { data: data });
 };
 
 const getUsers = (req, res) => {
@@ -194,7 +183,9 @@ const runQuery = (req, res) => {
   // console.log(req.body);
   pool
     .query(`${req.body.query}`)
-    .then((response) => res.render("queries", { data: response }))
+    .then((response) =>
+      res.render("queries", { data: { resp: response, query: req.body.query } })
+    )
     .catch((err) => res.json(err));
 };
 
