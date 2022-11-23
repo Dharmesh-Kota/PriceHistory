@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Users</title>
+    <title>Products</title>
     <link rel="stylesheet" href="/css/products.css" />
   </head>
 
@@ -281,7 +281,7 @@
 
     <div class="container-fluid w-75 my-5">
       <table class="table">
-        <thead class="bg-dark text-light">
+        <thead class="text-light bg-primary">
           <tr>
             <th onclick="sortTable(0)" scope="col">Product ID</th>
             <th onclick="sortTable(1)" scope="col">Product Name</th>
@@ -312,12 +312,12 @@
                          <td>${row.length}</td>
                             <td>${row.width}</td>
                       <td>${row.height}</td>
-                       <td scope="col"><button type="button" data-product=${row.product_id} class="btn btn-primary btn-modal" data-bs-toggle="modal" data-bs-target="#editModal">
-                        <i data-product=${row.product_id} class="fa-solid fa-pen-to-square btn-modal"></i>
+                       <td scope="col"><button type="button" data-product=${row.product_id} class="btn btn-modal" data-bs-toggle="modal" data-bs-target="#editModal" style="background-color:#003366">
+                        <i data-product=${row.product_id} class="fa-solid fa-pen-to-square btn-modal text-light"></i>
                       </button>
                       </td>
                       <td scope="col">
-                        <i role="button" data-product=${row.product_id} class="fa-solid fa-trash text-danger btn-delete p-2" ></i>
+                        <i role="button" data-product=${row.product_id} class="fa-solid fa-trash text-danger border border-2 border-danger rounded-3 btn-delete p-2" ></i>
                       </td>
                     </tr>`
                         });

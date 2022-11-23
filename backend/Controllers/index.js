@@ -24,7 +24,7 @@ const getHome = (req, res) => {
         .then((response2) => {
           pool
             .query(
-              "SELECT product_id, min(price) as min_price, max(price) as max_price FROM pricehistory.product_price group by product_id order by product_id ASC;"
+              "select product_id, min(price) as min_price, max(price) as max_price from pricehistory.price_history group by product_id order by product_id ASC;"
             )
             .then((response3) => {
               res.render("index", {

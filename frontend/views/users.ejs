@@ -192,7 +192,7 @@
 
     <div class="container-fluid w-75 my-5">
       <table class="table">
-        <thead class="bg-dark text-light">
+        <thead class="text-light bg-primary">
           <tr>
             <th onclick="sortTable(0)" scope="col">User ID</th>
             <th onclick="sortTable(1)" scope="col">User Email</th>
@@ -219,12 +219,12 @@
           <td scope="col">${row.user_email}</td>
           <td scope="col">${row.user_password}</td>
           <td scope="col">${row.postal_code}</td>
-          <td scope="col"><button type="button" data-user=${row.user_id} class="btn btn-primary btn-modal" data-bs-toggle="modal" data-bs-target="#editModal">
-              <i data-user=${row.user_id} class="fa-solid fa-pen-to-square btn-modal"></i>
+          <td scope="col"><button type="button" data-user=${row.user_id} class="btn btn-modal" data-bs-toggle="modal" data-bs-target="#editModal" style="background-color:#003366">
+              <i data-user=${row.user_id} class="fa-solid fa-pen-to-square btn-modal text-light"></i>
           </button>
           </td>
           <td scope="col">
-             <i role="button" data-user=${row.user_id} class="fa-solid fa-trash text-danger btn-delete p-2" ></i>
+             <i role="button" data-user=${row.user_id} class="fa-solid border border-danger border-2 rounded-3 fa-trash text-danger btn-delete p-2" ></i>
           </td>
         </tr>`
             });
@@ -288,6 +288,7 @@
           document.querySelector('.table').innerHTML += table;
             var response = {};
             document.querySelectorAll('.btn-modal').forEach((row)=>row.addEventListener('click', (e)=>{
+              console.log(row)
               let obj = undefined;
               data.rows.forEach((row)=> {
                 if(row.user_id === e.target.dataset.user)
