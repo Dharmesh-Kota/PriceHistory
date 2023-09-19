@@ -11,7 +11,6 @@ const connectOptions = {
 const pool = new Pool(connectOptions);
 
 const getHome = (req, res) => {
-  var data = [];
   pool
     .query(
       "Select product_id, avg(rating) From pricehistory.rating group by product_id order by product_id ASC"
@@ -47,7 +46,7 @@ const getUsers = (req, res) => {
       console.log("users get successfully");
       res.render("users", { data: results });
     })
-    .catch((e) => console.log(e));
+    .catch((e) => res.json(e));
 };
 
 const getUserById = (req, res) => {
@@ -64,7 +63,6 @@ const getUserById = (req, res) => {
 
 const createUser = (req, res) => {
   const { user_id, user_email, user_password, postal_code } = req.body;
-  console.log(req.body);
   pool
     .query("INSERT into pricehistory.users VALUES($1, $2, $3, $4)", [
       user_id,
@@ -132,7 +130,7 @@ const createProduct = (req, res) => {
     req.body;
   pool
     .query(
-      "insert into pricehistory.product values($1, $2, $3, $4, $5,  $6,  $7)",
+      "insert into pricehistory.product values($1, $2, $3, $4, $5,  $6, $7)",
       [product_id, product_name, weight, brand, width, length, height]
     )
     .then((response) => {

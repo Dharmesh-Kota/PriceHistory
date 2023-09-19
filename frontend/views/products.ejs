@@ -433,7 +433,7 @@
 
                        document.querySelectorAll('.btn-delete').forEach((row)=>{
                         row.addEventListener('click', (e)=>{
-                          const id = e.target.dataset.user;
+                          const id = e.target.dataset.product;
                           console.log(id);
                             if(confirm(`Are you sure you want to delete this product ${id}?`))
                             {

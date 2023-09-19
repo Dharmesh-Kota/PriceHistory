@@ -3,12 +3,11 @@ const app = express();
 const bodyParser = require("body-parser");
 const path = require("path");
 
-const { Pool } = require("pg");
-
 const port = 3000;
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+// this middleware is used to parse the data from the frontend into a json format
+app.use(express.urlencoded({ extended: false })); // extended false means you can't post "nested object"
+app.use(express.json());
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "../frontend/views"));
@@ -18,7 +17,6 @@ require("dotenv").config();
 
 const indexRoutes = require("./Routes/index");
 
-app.use(express.json());
 app.use(indexRoutes);
 
 app.listen(port, () => console.log("Server Listening on PORT ", port));
