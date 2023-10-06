@@ -1,4 +1,4 @@
-# Project Name
+# PriceHistory
 
 Main goal of this project was to make a replica database of pricehistory website. Current design of database is based on the proper user case studies based on their requirements. Currently it has very simple UI to interact with database, with potential improvements possible.
 
