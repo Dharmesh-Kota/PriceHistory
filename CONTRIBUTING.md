@@ -11,7 +11,7 @@ To get started, please follow these steps:
 3. Fork this repository to your own GitHub account.
 4. Clone the forked repository to your local machine.
    ```bash
-   git clone https://github.com/your-username/your-project.git
+   git clone https://github.com/harshmetkel24/pricehistory.git
    ```
 5. Create a new branch for your changes.
 6. Make your changes and commit them to your branch.
