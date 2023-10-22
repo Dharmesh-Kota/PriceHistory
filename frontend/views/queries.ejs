@@ -41,8 +41,8 @@
 </button>
 
 <div class="container-fluid w-75">
-  <table class="table bg-dark-default text-light-default fw-bold">
-    <thead class="bg-primary-default">
+  <table class="table">
+    <thead class="text-light bg-primary-default">
       <tr></tr>
     </thead>
   </table>
@@ -123,7 +123,7 @@
           tablerow.push(i.name)
           for(let i of tablerow)
           tabledata += `<td>${row[i]}</td>`
-        document.querySelector('.table').innerHTML += `<tr>
+        document.querySelector('.table').innerHTML += `<tr class="text-light-default">
                                                         ${tabledata}
                                                       </tr>`
       })
