@@ -13,17 +13,17 @@ const pool = new Pool(connectOptions);
 const getHome = (req, res) => {
   pool
     .query(
-      "Select product_id, avg(rating) From pricehistory.rating group by product_id order by product_id ASC"
+      "Select product_id, avg(rating) From rating group by product_id order by product_id ASC"
     )
     .then((response) => {
       pool
         .query(
-          "SELECT product_id, product_name FROM pricehistory.product where product_id = (select product_id from pricehistory.buys group by product_id order by count(product_id) DESC limit 1);"
+          "SELECT product_id, product_name FROM product where product_id = (select product_id from buys group by product_id order by count(product_id) DESC limit 1);"
         )
         .then((response2) => {
           pool
             .query(
-              "select product_id, min(price) as min_price, max(price) as max_price from pricehistory.price_history group by product_id order by product_id ASC;"
+              "select product_id, min(price) as min_price, max(price) as max_price from price_history group by product_id order by product_id ASC;"
             )
             .then((response3) => {
               res.render("index", {
@@ -41,7 +41,7 @@ const getHome = (req, res) => {
 
 const getUsers = (req, res) => {
   pool
-    .query(`select * from pricehistory.users order by user_id asc`)
+    .query(`select * from users order by user_id asc`)
     .then((results) => {
       console.log("users get successfully");
       res.render("users", { data: results });
@@ -53,7 +53,7 @@ const getUserById = (req, res) => {
   const id = req.params.id;
   console.log(id);
   pool
-    .query(`SELECT * FROM pricehistory.users WHERE user_id = $1`, [id])
+    .query(`SELECT * FROM users WHERE user_id = $1`, [id])
     .then((results) => {
       console.log("user get successfully");
       res.json(results.rows);
@@ -64,7 +64,7 @@ const getUserById = (req, res) => {
 const createUser = (req, res) => {
   const { user_id, user_email, user_password, postal_code } = req.body;
   pool
-    .query("INSERT into pricehistory.users VALUES($1, $2, $3, $4)", [
+    .query("INSERT into users VALUES($1, $2, $3, $4)", [
       user_id,
       user_email,
       user_password,
@@ -83,7 +83,7 @@ const updateUser = (req, res) => {
   console.log(user_password, postal_code, id);
   pool
     .query(
-      "UPDATE pricehistory.users SET user_password = $1, postal_code = $2 where user_id = $3",
+      "UPDATE users SET user_password = $1, postal_code = $2 where user_id = $3",
       [user_password, postal_code, id]
     )
     .then((response) => {
@@ -96,7 +96,7 @@ const updateUser = (req, res) => {
 const deleteUser = (req, res) => {
   const id = req.params.id;
   pool
-    .query("DELETE FROM pricehistory.users where user_id = $1", [id])
+    .query("DELETE FROM users where user_id = $1", [id])
     .then((response) => {
       console.log("user deleted successfully");
       res.redirect("/users");
@@ -106,7 +106,7 @@ const deleteUser = (req, res) => {
 
 const getProducts = (req, res) => {
   pool
-    .query(`select * from pricehistory.product order by product_id asc`)
+    .query(`select * from product order by product_id asc`)
     .then((results) => {
       console.log("products get successfully");
       res.render("products", { data: results });
@@ -117,7 +117,7 @@ const getProducts = (req, res) => {
 const getProuctById = (req, res) => {
   const id = req.params.id;
   pool
-    .query("select * from pricehistory.product where product_id = $1", id)
+    .query("select * from product where product_id = $1", id)
     .then((response) => {
       console.log("product get successfully");
       res.json(response);
@@ -130,7 +130,7 @@ const createProduct = (req, res) => {
     req.body;
   pool
     .query(
-      "insert into pricehistory.product values($1, $2, $3, $4, $5,  $6, $7)",
+      "insert into product values($1, $2, $3, $4, $5,  $6, $7)",
       [product_id, product_name, weight, brand, width, length, height]
     )
     .then((response) => {
@@ -143,7 +143,7 @@ const createProduct = (req, res) => {
 const deleteProduct = (req, res) => {
   const id = req.params.id;
   pool
-    .query("DELETE FROM pricehistory.product WHERE product_id = $1", [id])
+    .query("DELETE FROM product WHERE product_id = $1", [id])
     .then((response) => {
       console.log("product deleted successfully");
       res.redirect("/products");
@@ -156,7 +156,7 @@ const updateProduct = (req, res) => {
   const { product_name, weight, brand, width, length, height } = req.body;
   pool
     .query(
-      `UPDATE pricehistory.product SET product_name = $1, 
+      `UPDATE product SET product_name = $1, 
                                               weight = $2,
                                               brand = $3,
                                               width = $4,
