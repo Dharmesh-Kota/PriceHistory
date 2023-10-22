@@ -1,220 +1,211 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Users</title>
-    <link rel="stylesheet" href="/css/products.css" />
-  </head>
+<title>Users</title>
+<link rel="stylesheet" href="/css/products.css" />
 
-  <body>
-    <%- include("./partials/Navbar.ejs") %>
 
-    <button
-      type="button"
-      class="btn btn-primary btn-insert-modal position-fixed"
-      data-bs-toggle="modal"
-      data-bs-target="#insertModal"
-      title="Create new user"
-      style="right: 2em; bottom: 3.5em"
-    >
-      <i class="fa-solid fa-plus btn-insert-modal"></i>
-    </button>
+<button
+  type="button"
+  class="btn btn-primary btn-insert-modal position-fixed"
+  data-bs-toggle="modal"
+  data-bs-target="#insertModal"
+  title="Create new user"
+  style="right: 2em; bottom: 3.5em"
+>
+  <i class="fa-solid fa-plus btn-insert-modal"></i>
+</button>
 
-    <button
-      onclick="topFunction()"
-      style="right: 2em; bottom: 6em; display: none"
-      class="btn btn-dark text-light position-fixed shadow-lg"
-      id="myBtn"
-      title="Go to top"
-    >
-      <i class="fa-solid fa-chevron-up"></i>
-    </button>
+<button
+  onclick="topFunction()"
+  style="right: 2em; bottom: 6em; display: none"
+  class="btn btn-dark text-light position-fixed shadow-lg"
+  id="myBtn"
+  title="Go to top"
+>
+  <i class="fa-solid fa-chevron-up"></i>
+</button>
 
-    <button
-      onclick="bottomFunction()"
-      style="right: 2em; bottom: 1em"
-      class="btn btn-dark text-light position-fixed shadow-lg"
-      id="myBtn2"
-      title="Go to bottom"
-    ><i class="fa-solid fa-chevron-down"></i>
-    </button>
+<button
+  onclick="bottomFunction()"
+  style="right: 2em; bottom: 1em"
+  class="btn btn-dark text-light position-fixed shadow-lg"
+  id="myBtn2"
+  title="Go to bottom"
+><i class="fa-solid fa-chevron-down"></i>
+</button>
 
-    <form action="/users" method="post">
-      <!-- Modal to create user -->
-      <div
-        class="modal fade"
-        id="insertModal"
-        tabindex="-1"
-        aria-labelledby="insertModalLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content p-5">
-            <div class="modal-header">
-              <h1 class="modal-title fs-5" id="insertModalLabel">
-                Insert User
-              </h1>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div class="mb-3">
-              <label for="user_id-in" class="form-label">User ID</label>
-              <input
-                type="text"
-                class="form-control"
-                id="user_id-in"
-                value=""
-                name="user_id"
-                required
-                placeholder="User ID"
-              />
-              <div class="alert alert-warning p-2 my-2 text-center role="alert">
-                User ID must be unique
-              </div>
-            </div>
-            <div class="mb-3">
-              <label for="user_email-in" class="form-label">User Email</label>
-              <input
-                type="text"
-                class="form-control"
-                id="user_email-in"
-                value=""
-                name="user_email"
-                required
-                placeholder="User Email"
-              />
-            </div>
-            <div class="mb-3">
-              <label for="user_password-in" class="form-label">Password</label>
-              <input
-                type="text"
-                class="form-control"
-                id="user_password-in"
-                value=""
-                name="user_password"
-                required
-                placeholder="User Password"
-              />
-            </div>
-            <div class="mb-3">
-              <label for="user_email-in" class="form-label">Postal Code</label>
-              <input
-                type="text"
-                class="form-control"
-                id="postal_code-in"
-                value=""
-                name="postal_code"
-                required
-                placeholder="Postal Code"
-              />
-            </div>
-            <button type="submit" class="btn btn-primary insert-submit-btn">
-              Submit
-            </button>
+<form action="/users" method="post">
+  <!-- Modal to create user -->
+  <div
+    class="modal fade"
+    id="insertModal"
+    tabindex="-1"
+    aria-labelledby="insertModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content p-5">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="insertModalLabel">
+            Insert User
+          </h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="mb-3">
+          <label for="user_id-in" class="form-label">User ID</label>
+          <input
+            type="text"
+            class="form-control"
+            id="user_id-in"
+            value=""
+            name="user_id"
+            required
+            placeholder="User ID"
+          />
+          <div class="alert alert-warning p-2 my-2 text-center role="alert">
+            User ID must be unique
           </div>
         </div>
-      </div>
-    </form>
-
-    <!-- Modal to edit user -->
-    <div
-      class="modal fade"
-      id="editModal"
-      tabindex="-1"
-      aria-labelledby="editModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content p-5">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5" id="editModalLabel">Edit User</h1>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="mb-3">
-            <label for="user_id" class="form-label">User ID</label>
-            <input
-              type="text"
-              class="form-control"
-              id="user_id"
-              disabled
-              value=""
-              name="user_id"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="user_email" class="form-label">User Email</label>
-            <input
-              type="text"
-              class="form-control"
-              id="user_email"
-              disabled
-              value=""
-              name="user_email"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="user_password" class="form-label">Password</label>
-            <input
-              type="text"
-              class="form-control"
-              id="user_password"
-              value=""
-              name="user_password"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="user_email" class="form-label">Postal Code</label>
-            <input
-              type="text"
-              class="form-control"
-              id="postal_code"
-              value="postal_code"
-              name="postal_code"
-            />
-          </div>
-          <button type="submit" class="btn btn-primary submit-btn">
-            Submit
-          </button>
+        <div class="mb-3">
+          <label for="user_email-in" class="form-label">User Email</label>
+          <input
+            type="text"
+            class="form-control"
+            id="user_email-in"
+            value=""
+            name="user_email"
+            required
+            placeholder="User Email"
+          />
         </div>
+        <div class="mb-3">
+          <label for="user_password-in" class="form-label">Password</label>
+          <input
+            type="text"
+            class="form-control"
+            id="user_password-in"
+            value=""
+            name="user_password"
+            required
+            placeholder="User Password"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="user_email-in" class="form-label">Postal Code</label>
+          <input
+            type="text"
+            class="form-control"
+            id="postal_code-in"
+            value=""
+            name="postal_code"
+            required
+            placeholder="Postal Code"
+          />
+        </div>
+        <button type="submit" class="btn btn-primary insert-submit-btn">
+          Submit
+        </button>
       </div>
     </div>
+  </div>
+</form>
 
-    <div class="container-fluid w-75 my-5">
-      <table class="table">
-        <thead class="text-light bg-primary">
-          <tr>
-            <th onclick="sortTable(0)" scope="col">User ID</th>
-            <th onclick="sortTable(1)" scope="col">User Email</th>
-            <th onclick="sortTable(2)" scope="col">User Password</th>
-            <th onclick="sortTable(3)" scope="col">User Postal Code</th>
-            <th scope="col">Edit User</th>
-            <th scope="col">Delete User</th>
-          </tr>
-        </thead>
-      </table>
+<!-- Modal to edit user -->
+<div
+  class="modal fade"
+  id="editModal"
+  tabindex="-1"
+  aria-labelledby="editModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content p-5">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="editModalLabel">Edit User</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="mb-3">
+        <label for="user_id" class="form-label">User ID</label>
+        <input
+          type="text"
+          class="form-control"
+          id="user_id"
+          disabled
+          value=""
+          name="user_id"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="user_email" class="form-label">User Email</label>
+        <input
+          type="text"
+          class="form-control"
+          id="user_email"
+          disabled
+          value=""
+          name="user_email"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="user_password" class="form-label">Password</label>
+        <input
+          type="text"
+          class="form-control"
+          id="user_password"
+          value=""
+          name="user_password"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="user_email" class="form-label">Postal Code</label>
+        <input
+          type="text"
+          class="form-control"
+          id="postal_code"
+          value="postal_code"
+          name="postal_code"
+        />
+      </div>
+      <button type="submit" class="btn btn-primary submit-btn">
+        Submit
+      </button>
     </div>
+  </div>
+</div>
 
-    
-  </body>
+<div class="container-fluid w-75 my-5">
+  <table class="table">
+    <thead class="text-light bg-primary">
+      <tr>
+        <th onclick="sortTable(0)" scope="col">User ID</th>
+        <th onclick="sortTable(1)" scope="col">User Email</th>
+        <th onclick="sortTable(2)" scope="col">User Password</th>
+        <th onclick="sortTable(3)" scope="col">User Postal Code</th>
+        <th scope="col">Edit User</th>
+        <th scope="col">Delete User</th>
+      </tr>
+    </thead>
+  </table>
+</div>
 
-  <script>
-            var data = <%- JSON.stringify(data) %>;
-            console.log(data.rows)
-            var table=``;
-            data.rows.forEach(row => {
-                table +=
-                `<tr>
+
+
+
+<script>
+  var data = <%- JSON.stringify(data) %>;
+  console.log(data.rows)
+  var table=``;
+  data.rows.forEach(row => {
+      table +=
+      `<tr>
           <td scope="col"><strong>${row.user_id}</strong></td>
           <td scope="col">${row.user_email}</td>
           <td scope="col">${row.user_password}</td>
@@ -224,156 +215,156 @@
           </button>
           </td>
           <td scope="col">
-             <i role="button" data-user=${row.user_id} class="fa-solid border border-danger border-2 rounded-3 fa-trash text-danger btn-delete p-2" ></i>
+              <i role="button" data-user=${row.user_id} class="fa-solid border border-danger border-2 rounded-3 fa-trash text-danger btn-delete p-2" ></i>
           </td>
         </tr>`
-            });
+});
 
-            function sortTable(n) {
-                var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-                table = document.querySelector('.table');
-                switching = true;
-                // Set the sorting direction to ascending:
-                dir = "asc";
-                /* Make a loop that will continue until
-                no switching has been done: */
-                while (switching) {
-                // Start by saying: no switching is done:
-                switching = false;
-                rows = table.rows;
-                /* Loop through all table rows (except the
-                first, which contains table headers): */
-                for (i = 1; i < (rows.length - 1); i++) {
-                  // Start by saying there should be no switching:
-                  shouldSwitch = false;
-                  /* Get the two elements you want to compare,
-                  one from current row and one from the next: */
-                  x = rows[i].getElementsByTagName("TD")[n];
-                  y = rows[i + 1].getElementsByTagName("TD")[n];
-                  /* Check if the two rows should switch place,
-                  based on the direction, asc or desc: */
-                  if (dir == "asc") {
-                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-                      // If so, mark as a switch and break the loop:
-                      shouldSwitch = true;
-                      break;
-                    }
-                  } else if (dir == "desc") {
-                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-                      // If so, mark as a switch and break the loop:
-                      shouldSwitch = true;
-                      break;
-                    }
-                  }
-                }
-                if (shouldSwitch) {
-                  /* If a switch has been marked, make the switch
-                  and mark that a switch has been done: */
-                  rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-                  switching = true;
-                  // Each time a switch is done, increase this count by 1:
-                  switchcount ++;
-                } else {
-                  /* If no switching has been done AND the direction is "asc",
-                  set the direction to "desc" and run the while loop again. */
-                  if (switchcount == 0 && dir == "asc") {
-                    dir = "desc";
-                    switching = true;
-                  }
-                }
-              }
-            }
-
-
-          document.querySelector('.table').innerHTML += table;
-            var response = {};
-            document.querySelectorAll('.btn-modal').forEach((row)=>row.addEventListener('click', (e)=>{
-              console.log(row)
-              let obj = undefined;
-              data.rows.forEach((row)=> {
-                if(row.user_id === e.target.dataset.user)
-                {
-                  obj = row;
-                  return;
-                }
-              })
-              response = obj;
-              document.querySelector('#user_id').value =obj.user_id
-              document.querySelector("#user_email").value = obj.user_email
-              document.querySelector("#user_password").value = obj.user_password;
-              document.querySelector("#postal_code").value = obj.postal_code;
-            }))
-
-    document.querySelector('.submit-btn').addEventListener('click', ()=> {
-      response.user_password = document.querySelector('#user_password').value;
-      response.postal_code = document.querySelector('#postal_code').value;
-      if(response.user_password!=='' && response.postal_code!=='')
-      {
-        fetch(`http://localhost:3000/users/${response.user_id}`, {
-         method: 'PUT',
-          headers: {
-            'Content-type': 'application/json'
-          },
-          body: JSON.stringify(response)
-        })
-          if(!(alert(`User ${response.user_id} updated successfully`)))
-          {
-            location.reload()
-          }
+function sortTable(n) {
+    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+    table = document.querySelector('.table');
+    switching = true;
+    // Set the sorting direction to ascending:
+    dir = "asc";
+    /* Make a loop that will continue until
+    no switching has been done: */
+    while (switching) {
+    // Start by saying: no switching is done:
+    switching = false;
+    rows = table.rows;
+    /* Loop through all table rows (except the
+    first, which contains table headers): */
+    for (i = 1; i < (rows.length - 1); i++) {
+      // Start by saying there should be no switching:
+      shouldSwitch = false;
+      /* Get the two elements you want to compare,
+      one from current row and one from the next: */
+      x = rows[i].getElementsByTagName("TD")[n];
+      y = rows[i + 1].getElementsByTagName("TD")[n];
+      /* Check if the two rows should switch place,
+      based on the direction, asc or desc: */
+      if (dir == "asc") {
+        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+          // If so, mark as a switch and break the loop:
+          shouldSwitch = true;
+          break;
         }
-        else {
-          alert('Password and Postal code must be non empty')
+      } else if (dir == "desc") {
+        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+          // If so, mark as a switch and break the loop:
+          shouldSwitch = true;
+          break;
         }
-    })
-
-
-    document.querySelectorAll('.btn-delete').forEach((row)=>{
-      row.addEventListener('click', (e)=>{
-         const id = e.target.dataset.user;
-          if(confirm(`Are you sure you want to delete this user ${id}?`))
-          {
-              fetch(`http://localhost:3000/users/${id}`, {
-                method :"delete",
-                headers:{
-                  'Content-type' :"application/json"
-                }
-              }).then((response)=>{
-                console.log(response);
-                if(confirm(`User ${id} deleted successfully`))
-                {
-                  location.reload();
-                }
-              })
-          }
-      })
-    })
-
-           // scroll to top
-        let mybutton = document.getElementById("myBtn");
-        let mybutton2 = document.getElementById('myBtn2')
-
-    // When the user scrolls down 20px from the top of the document, show the button
-    window.onscroll = function() {scrollFunction()};
-
-    function scrollFunction() {
-      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-        mybutton.style.display = "block";
-        mybutton2.style.display = "none";
-      } else {
-        mybutton.style.display = "none";
-        mybutton2.style.display = "block";
       }
     }
+    if (shouldSwitch) {
+      /* If a switch has been marked, make the switch
+      and mark that a switch has been done: */
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+      // Each time a switch is done, increase this count by 1:
+      switchcount ++;
+    } else {
+      /* If no switching has been done AND the direction is "asc",
+      set the direction to "desc" and run the while loop again. */
+      if (switchcount == 0 && dir == "asc") {
+        dir = "desc";
+        switching = true;
+      }
+    }
+  }
+}
+
+
+document.querySelector('.table').innerHTML += table;
+  var response = {};
+  document.querySelectorAll('.btn-modal').forEach((row)=>row.addEventListener('click', (e)=>{
+    console.log(row)
+    let obj = undefined;
+    data.rows.forEach((row)=> {
+      if(row.user_id === e.target.dataset.user)
+      {
+        obj = row;
+        return;
+      }
+    })
+    response = obj;
+    document.querySelector('#user_id').value =obj.user_id
+    document.querySelector("#user_email").value = obj.user_email
+    document.querySelector("#user_password").value = obj.user_password;
+    document.querySelector("#postal_code").value = obj.postal_code;
+  }))
+
+document.querySelector('.submit-btn').addEventListener('click', ()=> {
+  response.user_password = document.querySelector('#user_password').value;
+  response.postal_code = document.querySelector('#postal_code').value;
+  if(response.user_password!=='' && response.postal_code!=='')
+  {
+    fetch(`http://localhost:3000/users/${response.user_id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify(response)
+    })
+      if(!(alert(`User ${response.user_id} updated successfully`)))
+      {
+        location.reload()
+      }
+    }
+    else {
+      alert('Password and Postal code must be non empty')
+    }
+})
+
+
+document.querySelectorAll('.btn-delete').forEach((row)=>{
+  row.addEventListener('click', (e)=>{
+      const id = e.target.dataset.user;
+      if(confirm(`Are you sure you want to delete this user ${id}?`))
+      {
+          fetch(`http://localhost:3000/users/${id}`, {
+            method :"delete",
+            headers:{
+              'Content-type' :"application/json"
+            }
+          }).then((response)=>{
+            console.log(response);
+            if(confirm(`User ${id} deleted successfully`))
+            {
+              location.reload();
+            }
+          })
+      }
+  })
+})
+
+// scroll to top
+let mybutton = document.getElementById("myBtn");
+let mybutton2 = document.getElementById('myBtn2')
+
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    mybutton.style.display = "block";
+    mybutton2.style.display = "none";
+  } else {
+    mybutton.style.display = "none";
+    mybutton2.style.display = "block";
+  }
+}
 
 // When the user clicks on the button, scroll to the top of the document
 function topFunction() {
-      document.body.scrollTop = 0;
-      document.documentElement.scrollTop = 0;
-    }
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  }
 
-     function bottomFunction() {
-      document.body.scrollTop = 10024;
-      document.documentElement.scrollTop = 10024;
-    }
-  </script>
-</html>
+    function bottomFunction() {
+    document.body.scrollTop = 10024;
+    document.documentElement.scrollTop = 10024;
+  }
+</script>
+

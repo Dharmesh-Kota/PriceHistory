@@ -1,485 +1,467 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Products</title>
-    <link rel="stylesheet" href="/css/products.css" />
-  </head>
+<title>Products</title>
+<link rel="stylesheet" href="/css/products.css" />
 
-  <body>
-    <%- include("./partials/Navbar.ejs") %>
+<button
+  type="button"
+  class="btn btn-primary btn-insert-modal position-fixed"
+  data-bs-toggle="modal"
+  data-bs-target="#insertModal"
+  style="right: 2em; bottom: 3.5em"
+>
+  <i class="fa-solid fa-plus btn-insert-modal"></i>
+</button>
 
-    <button
-      type="button"
-      class="btn btn-primary btn-insert-modal position-fixed"
-      data-bs-toggle="modal"
-      data-bs-target="#insertModal"
-      style="right: 2em; bottom: 3.5em"
-    >
-      <i class="fa-solid fa-plus btn-insert-modal"></i>
-    </button>
+<button
+  onclick="topFunction()"
+  style="right: 2em; bottom: 6em"
+  class="btn btn-dark text-light position-fixed"
+  id="myBtn"
+  title="Go to top"
+>
+  <i class="fa-solid fa-chevron-up"></i>
+</button>
 
-    <button
-      onclick="topFunction()"
-      style="right: 2em; bottom: 6em"
-      class="btn btn-dark text-light position-fixed"
-      id="myBtn"
-      title="Go to top"
-    >
-      <i class="fa-solid fa-chevron-up"></i>
-    </button>
+<button
+  onclick="bottomFunction()"
+  style="right: 2em; bottom: 1em"
+  class="btn btn-dark text-light position-fixed shadow-lg"
+  id="myBtn2"
+  title="Go to bottom"
+>
+  <i class="fa-solid fa-chevron-down"></i>
+</button>
 
-    <button
-      onclick="bottomFunction()"
-      style="right: 2em; bottom: 1em"
-      class="btn btn-dark text-light position-fixed shadow-lg"
-      id="myBtn2"
-      title="Go to bottom"
-    >
-      <i class="fa-solid fa-chevron-down"></i>
-    </button>
-
-    <form action="/products" method="post">
-      <!-- Modal to create product -->
-      <div
-        class="modal fade"
-        id="insertModal"
-        tabindex="-1"
-        aria-labelledby="insertModalLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content p-5">
-            <div class="modal-header">
-              <h1 class="modal-title fs-5" id="insertModalLabel">
-                Insert Product
-              </h1>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div class="mb-3">
-              <label for="product_id-in" class="form-label">Product ID</label>
-              <input
-                type="text"
-                class="form-control"
-                id="product_id-in"
-                value=""
-                name="product_id"
-                required
-                placeholder="Product ID"
-              />
-            </div>
-            <div class="mb-3">
-              <label for="product_name-in" class="form-label"
-                >Product Name</label
-              >
-              <input
-                type="text"
-                class="form-control"
-                id="product_name-in"
-                value=""
-                name="product_name"
-                required
-                placeholder="Product Name"
-              />
-            </div>
-            <div class="mb-3">
-              <label for="user_email-in" class="form-label">Postal Code</label>
-              <input
-                type="text"
-                class="form-control"
-                id="postal_code-in"
-                value=""
-                name="postal_code"
-                required
-                placeholder="Postal Code"
-              />
-            </div>
-            <div class="mb-3">
-              <label for="brand-in" class="form-label">Brand</label>
-              <input
-                type="text"
-                class="form-control"
-                id="brand-in"
-                value=""
-                name="brand"
-                required
-                placeholder="User Password"
-              />
-            </div>
-            <div class="mb-3">
-              <label for="weight-in" class="form-label">Weight</label>
-              <input
-                type="text"
-                class="form-control"
-                id="weight-in"
-                value=""
-                name="weight"
-                required
-                placeholder="Weight"
-              />
-            </div>
-            <div class="mb-3">
-              <label for="length-in" class="form-label">Length</label>
-              <input
-                type="text"
-                class="form-control"
-                id="length-in"
-                value=""
-                name="length"
-                required
-                placeholder="Length"
-              />
-            </div>
-            <div class="mb-3">
-              <label for="weight-in" class="form-label">Height</label>
-              <input
-                type="text"
-                class="form-control"
-                id="height-in"
-                value=""
-                name="height"
-                required
-                placeholder="Height"
-              />
-            </div>
-            <button type="submit" class="btn btn-primary insert-submit-btn">
-              Submit
-            </button>
-          </div>
+<form action="/products" method="post">
+  <!-- Modal to create product -->
+  <div
+    class="modal fade"
+    id="insertModal"
+    tabindex="-1"
+    aria-labelledby="insertModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content p-5">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="insertModalLabel">Insert Product</h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
         </div>
-      </div>
-    </form>
-
-    <!-- Modal to edit Product -->
-    <div
-      class="modal fade"
-      id="editModal"
-      tabindex="-1"
-      aria-labelledby="editModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content p-5">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5" id="editModalLabel">Edit product</h1>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="mb-3">
-            <label for="product_id" class="form-label">Product ID</label>
-            <input
-              type="text"
-              class="form-control"
-              id="product_id"
-              value=""
-              name="product_id"
-              disabled
-              placeholder="Product ID"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="product_name" class="form-label">Product Name</label>
-            <input
-              type="text"
-              class="form-control"
-              id="product_name"
-              value=""
-              name="product_name"
-              required
-              placeholder="Product Name"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="weight" class="form-label">Weight</label>
-            <input
-              type="text"
-              class="form-control"
-              id="weight"
-              value=""
-              name="weight"
-              required
-              placeholder="Weight"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="brand" class="form-label">Brand</label>
-            <input
-              type="text"
-              class="form-control"
-              id="brand"
-              value=""
-              name="brand"
-              required
-              placeholder="Brand"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="width" class="form-label">Width</label>
-            <input
-              type="text"
-              class="form-control"
-              id="width"
-              value=""
-              name="width"
-              required
-              placeholder="Width"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="weight" class="form-label">Weight</label>
-            <input
-              type="text"
-              class="form-control"
-              id="weight"
-              value=""
-              name="weight"
-              required
-              placeholder="Weight"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="length" class="form-label">Length</label>
-            <input
-              type="text"
-              class="form-control"
-              id="length"
-              value=""
-              name="length"
-              required
-              placeholder="Length"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="weight" class="form-label">Height</label>
-            <input
-              type="text"
-              class="form-control"
-              id="height"
-              value=""
-              name="height"
-              required
-              placeholder="Height"
-            />
-          </div>
-          <button type="submit" class="btn btn-primary submit-btn">
-            Submit
-          </button>
+        <div class="mb-3">
+          <label for="product_id-in" class="form-label">Product ID</label>
+          <input
+            type="text"
+            class="form-control"
+            id="product_id-in"
+            value=""
+            name="product_id"
+            required
+            placeholder="Product ID"
+          />
         </div>
+        <div class="mb-3">
+          <label for="product_name-in" class="form-label">Product Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="product_name-in"
+            value=""
+            name="product_name"
+            required
+            placeholder="Product Name"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="user_email-in" class="form-label">Postal Code</label>
+          <input
+            type="text"
+            class="form-control"
+            id="postal_code-in"
+            value=""
+            name="postal_code"
+            required
+            placeholder="Postal Code"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="brand-in" class="form-label">Brand</label>
+          <input
+            type="text"
+            class="form-control"
+            id="brand-in"
+            value=""
+            name="brand"
+            required
+            placeholder="User Password"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="weight-in" class="form-label">Weight</label>
+          <input
+            type="text"
+            class="form-control"
+            id="weight-in"
+            value=""
+            name="weight"
+            required
+            placeholder="Weight"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="length-in" class="form-label">Length</label>
+          <input
+            type="text"
+            class="form-control"
+            id="length-in"
+            value=""
+            name="length"
+            required
+            placeholder="Length"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="weight-in" class="form-label">Height</label>
+          <input
+            type="text"
+            class="form-control"
+            id="height-in"
+            value=""
+            name="height"
+            required
+            placeholder="Height"
+          />
+        </div>
+        <button type="submit" class="btn btn-primary insert-submit-btn">
+          Submit
+        </button>
       </div>
     </div>
+  </div>
+</form>
 
-    <div class="container-fluid w-75 my-5">
-      <table class="table">
-        <thead class="text-light bg-primary">
-          <tr>
-            <th onclick="sortTable(0)" scope="col">Product ID</th>
-            <th onclick="sortTable(1)" scope="col">Product Name</th>
-            <th onclick="sortTable(2)" scope="col">Brand</th>
-            <th onclick="sortTable(3)" scope="col">Weight</th>
-            <th onclick="sortTable(4)" scope="col">Length</th>
-            <th onclick="sortTable(5)" scope="col">Width</th>
-            <th onclick="sortTable(6)" scope="col">height</th>
-            <th scope="col">Edit Product</th>
-            <th scope="col">Delete Product</th>
-          </tr>
-        </thead>
-      </table>
+<!-- Modal to edit Product -->
+<div
+  class="modal fade"
+  id="editModal"
+  tabindex="-1"
+  aria-labelledby="editModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content p-5">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="editModalLabel">Edit product</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="mb-3">
+        <label for="product_id" class="form-label">Product ID</label>
+        <input
+          type="text"
+          class="form-control"
+          id="product_id"
+          value=""
+          name="product_id"
+          disabled
+          placeholder="Product ID"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="product_name" class="form-label">Product Name</label>
+        <input
+          type="text"
+          class="form-control"
+          id="product_name"
+          value=""
+          name="product_name"
+          required
+          placeholder="Product Name"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="weight" class="form-label">Weight</label>
+        <input
+          type="text"
+          class="form-control"
+          id="weight"
+          value=""
+          name="weight"
+          required
+          placeholder="Weight"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="brand" class="form-label">Brand</label>
+        <input
+          type="text"
+          class="form-control"
+          id="brand"
+          value=""
+          name="brand"
+          required
+          placeholder="Brand"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="width" class="form-label">Width</label>
+        <input
+          type="text"
+          class="form-control"
+          id="width"
+          value=""
+          name="width"
+          required
+          placeholder="Width"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="weight" class="form-label">Weight</label>
+        <input
+          type="text"
+          class="form-control"
+          id="weight"
+          value=""
+          name="weight"
+          required
+          placeholder="Weight"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="length" class="form-label">Length</label>
+        <input
+          type="text"
+          class="form-control"
+          id="length"
+          value=""
+          name="length"
+          required
+          placeholder="Length"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="weight" class="form-label">Height</label>
+        <input
+          type="text"
+          class="form-control"
+          id="height"
+          value=""
+          name="height"
+          required
+          placeholder="Height"
+        />
+      </div>
+      <button type="submit" class="btn btn-primary submit-btn">Submit</button>
     </div>
-  </body>
+  </div>
+</div>
 
-  <script>
-                        var data = <%- JSON.stringify(data) %>;
+<div class="container-fluid w-75 my-5">
+  <table class="table">
+    <thead class="text-light bg-primary">
+      <tr>
+        <th onclick="sortTable(0)" scope="col">Product ID</th>
+        <th onclick="sortTable(1)" scope="col">Product Name</th>
+        <th onclick="sortTable(2)" scope="col">Brand</th>
+        <th onclick="sortTable(3)" scope="col">Weight</th>
+        <th onclick="sortTable(4)" scope="col">Length</th>
+        <th onclick="sortTable(5)" scope="col">Width</th>
+        <th onclick="sortTable(6)" scope="col">height</th>
+        <th scope="col">Edit Product</th>
+        <th scope="col">Delete Product</th>
+      </tr>
+    </thead>
+  </table>
+</div>
 
-                        var table=``;
-            console.log((data.rows))
-                         data.rows.forEach(row => {
-                            table += `<tr>
-                      <td><strong>${row.product_id}</strong></td>
-                      <td>${row.product_name}</td>
-                    <td>${row.brand}</td>
-                      <td>${row.weight}</td>
-                         <td>${row.length}</td>
-                            <td>${row.width}</td>
-                      <td>${row.height}</td>
-                       <td scope="col"><button type="button" data-product=${row.product_id} class="btn btn-modal" data-bs-toggle="modal" data-bs-target="#editModal" style="background-color:#003366">
-                        <i data-product=${row.product_id} class="fa-solid fa-pen-to-square btn-modal text-light"></i>
-                      </button>
-                      </td>
-                      <td scope="col">
-                        <i role="button" data-product=${row.product_id} class="fa-solid fa-trash text-danger border border-2 border-danger rounded-3 btn-delete p-2" ></i>
-                      </td>
-                    </tr>`
-                        });
+<script>
+                      var data = <%- JSON.stringify(data) %>;
 
-                      function sortTable(n) {
-                        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-                        table = document.querySelector('.table');
-                        switching = true;
-                        // Set the sorting direction to ascending:
-                        dir = "asc";
-                        /* Make a loop that will continue until
-                        no switching has been done: */
-                        while (switching) {
-                        // Start by saying: no switching is done:
-                        switching = false;
-                        rows = table.rows;
-                        /* Loop through all table rows (except the
-                        first, which contains table headers): */
-                        for (i = 1; i < (rows.length - 1); i++) {
-                          // Start by saying there should be no switching:
-                          shouldSwitch = false;
-                          /* Get the two elements you want to compare,
-                          one from current row and one from the next: */
-                          x = rows[i].getElementsByTagName("TD")[n];
-                          y = rows[i + 1].getElementsByTagName("TD")[n];
-                          /* Check if the two rows should switch place,
-                          based on the direction, asc or desc: */
-                          if (dir == "asc") {
-                            if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-                              // If so, mark as a switch and break the loop:
-                              shouldSwitch = true;
-                              break;
-                            }
-                          } else if (dir == "desc") {
-                            if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-                              // If so, mark as a switch and break the loop:
-                              shouldSwitch = true;
-                              break;
-                            }
+                      var table=``;
+          console.log((data.rows))
+                       data.rows.forEach(row => {
+                          table += `<tr>
+                    <td><strong>${row.product_id}</strong></td>
+                    <td>${row.product_name}</td>
+                  <td>${row.brand}</td>
+                    <td>${row.weight}</td>
+                       <td>${row.length}</td>
+                          <td>${row.width}</td>
+                    <td>${row.height}</td>
+                     <td scope="col"><button type="button" data-product=${row.product_id} class="btn btn-modal" data-bs-toggle="modal" data-bs-target="#editModal" style="background-color:#003366">
+                      <i data-product=${row.product_id} class="fa-solid fa-pen-to-square btn-modal text-light"></i>
+                    </button>
+                    </td>
+                    <td scope="col">
+                      <i role="button" data-product=${row.product_id} class="fa-solid fa-trash text-danger border border-2 border-danger rounded-3 btn-delete p-2" ></i>
+                    </td>
+                  </tr>`
+                      });
+
+                    function sortTable(n) {
+                      var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+                      table = document.querySelector('.table');
+                      switching = true;
+                      // Set the sorting direction to ascending:
+                      dir = "asc";
+                      /* Make a loop that will continue until
+                      no switching has been done: */
+                      while (switching) {
+                      // Start by saying: no switching is done:
+                      switching = false;
+                      rows = table.rows;
+                      /* Loop through all table rows (except the
+                      first, which contains table headers): */
+                      for (i = 1; i < (rows.length - 1); i++) {
+                        // Start by saying there should be no switching:
+                        shouldSwitch = false;
+                        /* Get the two elements you want to compare,
+                        one from current row and one from the next: */
+                        x = rows[i].getElementsByTagName("TD")[n];
+                        y = rows[i + 1].getElementsByTagName("TD")[n];
+                        /* Check if the two rows should switch place,
+                        based on the direction, asc or desc: */
+                        if (dir == "asc") {
+                          if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                            // If so, mark as a switch and break the loop:
+                            shouldSwitch = true;
+                            break;
                           }
-                        }
-                        if (shouldSwitch) {
-                          /* If a switch has been marked, make the switch
-                          and mark that a switch has been done: */
-                          rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-                          switching = true;
-                          // Each time a switch is done, increase this count by 1:
-                          switchcount ++;
-                        } else {
-                          /* If no switching has been done AND the direction is "asc",
-                          set the direction to "desc" and run the while loop again. */
-                          if (switchcount == 0 && dir == "asc") {
-                            dir = "desc";
-                            switching = true;
+                        } else if (dir == "desc") {
+                          if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                            // If so, mark as a switch and break the loop:
+                            shouldSwitch = true;
+                            break;
                           }
                         }
                       }
+                      if (shouldSwitch) {
+                        /* If a switch has been marked, make the switch
+                        and mark that a switch has been done: */
+                        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                        switching = true;
+                        // Each time a switch is done, increase this count by 1:
+                        switchcount ++;
+                      } else {
+                        /* If no switching has been done AND the direction is "asc",
+                        set the direction to "desc" and run the while loop again. */
+                        if (switchcount == 0 && dir == "asc") {
+                          dir = "desc";
+                          switching = true;
+                        }
+                      }
                     }
+                  }
 
 
 
 
 
-                      document.querySelector('.table').innerHTML += table;
+                    document.querySelector('.table').innerHTML += table;
 
-                        var response = {};
-                        document.querySelectorAll('.btn-modal').forEach((row)=>row.addEventListener('click', (e)=>{
-                          console.log(e.target)
-                          let obj = undefined;
-                          data.rows.forEach((row)=> {
-                            if(row.product_id === e.target.dataset.product)
-                            {
-                              obj = row;
-                              return;
-                            }
-                          })
-                          response = obj;
-                          document.querySelector('#product_id').value = obj.product_id
-                          document.querySelector("#product_name").value = obj.product_name
-                          document.querySelector("#weight").value = obj.weight;
-                          document.querySelector("#brand").value = obj.brand;
-                          document.querySelector("#width").value = obj.width;
-                          document.querySelector("#length").value = obj.length;
-                          document.querySelector("#height").value = obj.height;
-                        }))
-
-                         document.querySelector('.submit-btn').addEventListener('click', ()=> {
-                          response.product_name = document.querySelector('#product_name').value;
-                          response.weight = document.querySelector('#weight').value;
-                          response.brand = document.querySelector('#brand').value;
-                          response.width = document.querySelector('#width').value;
-                          response.length = document.querySelector('#length').value;
-                          response.height = document.querySelector('#height').value;
-                          if(response.product_name!=='' &&  response.weight!=='' && response.brand!==''&& response.width!==''&&  response.length!=='' &&  response.height!=='')
+                      var response = {};
+                      document.querySelectorAll('.btn-modal').forEach((row)=>row.addEventListener('click', (e)=>{
+                        console.log(e.target)
+                        let obj = undefined;
+                        data.rows.forEach((row)=> {
+                          if(row.product_id === e.target.dataset.product)
                           {
-                            fetch(`http://localhost:3000/products/${response.product_id}`, {
-                            method: 'PUT',
-                              headers: {
-                                'Content-type': 'application/json'
-                              },
-                              body: JSON.stringify(response)
-                            })
-                              if(!(alert(`Product ${response.product_id} updated successfully`)))
-                              {
-                                location.reload()
-                              }
-                            }
-                            else {
-                              alert('All fields must be non empty')
-                            }
+                            obj = row;
+                            return;
+                          }
                         })
+                        response = obj;
+                        document.querySelector('#product_id').value = obj.product_id
+                        document.querySelector("#product_name").value = obj.product_name
+                        document.querySelector("#weight").value = obj.weight;
+                        document.querySelector("#brand").value = obj.brand;
+                        document.querySelector("#width").value = obj.width;
+                        document.querySelector("#length").value = obj.length;
+                        document.querySelector("#height").value = obj.height;
+                      }))
 
-
-                       document.querySelectorAll('.btn-delete').forEach((row)=>{
-                        row.addEventListener('click', (e)=>{
-                          const id = e.target.dataset.product;
-                          console.log(id);
-                            if(confirm(`Are you sure you want to delete this product ${id}?`))
+                       document.querySelector('.submit-btn').addEventListener('click', ()=> {
+                        response.product_name = document.querySelector('#product_name').value;
+                        response.weight = document.querySelector('#weight').value;
+                        response.brand = document.querySelector('#brand').value;
+                        response.width = document.querySelector('#width').value;
+                        response.length = document.querySelector('#length').value;
+                        response.height = document.querySelector('#height').value;
+                        if(response.product_name!=='' &&  response.weight!=='' && response.brand!==''&& response.width!==''&&  response.length!=='' &&  response.height!=='')
+                        {
+                          fetch(`http://localhost:3000/products/${response.product_id}`, {
+                          method: 'PUT',
+                            headers: {
+                              'Content-type': 'application/json'
+                            },
+                            body: JSON.stringify(response)
+                          })
+                            if(!(alert(`Product ${response.product_id} updated successfully`)))
                             {
-                                fetch(`http://localhost:3000/products/${id}`, {
-                                  method :"delete",
-                                  headers:{
-                                    'Content-type' :"application/json"
-                                  }
-                                }).then((response)=>{
-                                  console.log(response);
-                                  if(confirm(`Product ${id} deleted successfully`))
-                                  {
-                                    location.reload();
-                                  }
-                                })
+                              location.reload()
                             }
-                        })
+                          }
+                          else {
+                            alert('All fields must be non empty')
+                          }
                       })
 
 
-        // scroll to top
-        let mybutton = document.getElementById("myBtn");
-        let mybutton2 = document.getElementById('myBtn2')
+                     document.querySelectorAll('.btn-delete').forEach((row)=>{
+                      row.addEventListener('click', (e)=>{
+                        const id = e.target.dataset.product;
+                        console.log(id);
+                          if(confirm(`Are you sure you want to delete this product ${id}?`))
+                          {
+                              fetch(`http://localhost:3000/products/${id}`, {
+                                method :"delete",
+                                headers:{
+                                  'Content-type' :"application/json"
+                                }
+                              }).then((response)=>{
+                                console.log(response);
+                                if(confirm(`Product ${id} deleted successfully`))
+                                {
+                                  location.reload();
+                                }
+                              })
+                          }
+                      })
+                    })
 
-        // When the user scrolls down 20px from the top of the document, show the button
-        window.onscroll = function() {scrollFunction()};
 
-        function scrollFunction() {
-          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-            mybutton.style.display = "block";
-            mybutton2.style.display = "none";
-          } else {
-            mybutton.style.display = "none";
-            mybutton2.style.display = "block";
-          }
+      // scroll to top
+      let mybutton = document.getElementById("myBtn");
+      let mybutton2 = document.getElementById('myBtn2')
+
+      // When the user scrolls down 20px from the top of the document, show the button
+      window.onscroll = function() {scrollFunction()};
+
+      function scrollFunction() {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+          mybutton.style.display = "block";
+          mybutton2.style.display = "none";
+        } else {
+          mybutton.style.display = "none";
+          mybutton2.style.display = "block";
         }
+      }
 
-    // When the user clicks on the button, scroll to the top of the document
-    function topFunction() {
-          document.body.scrollTop = 0;
-          document.documentElement.scrollTop = 0;
-        }
+  // When the user clicks on the button, scroll to the top of the document
+  function topFunction() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+      }
 
-         function bottomFunction() {
-          document.body.scrollTop = 10024;
-          document.documentElement.scrollTop = 10024;
-        }
-  </script>
-</html>
+       function bottomFunction() {
+        document.body.scrollTop = 10024;
+        document.documentElement.scrollTop = 10024;
+      }
+</script>
