@@ -3,7 +3,7 @@
 
 <button
   type="button"
-  class="btn btn-primary btn-insert-modal position-fixed"
+  class="btn-dark-default btn-insert-modal position-fixed"
   data-bs-toggle="modal"
   data-bs-target="#insertModal"
   style="right: 2em; bottom: 3.5em"
@@ -14,7 +14,7 @@
 <button
   onclick="topFunction()"
   style="right: 2em; bottom: 6em"
-  class="btn btn-dark text-light position-fixed"
+  class="btn-dark-default text-light-default position-fixed"
   id="myBtn"
   title="Go to top"
 >
@@ -24,7 +24,7 @@
 <button
   onclick="bottomFunction()"
   style="right: 2em; bottom: 1em"
-  class="btn btn-dark text-light position-fixed shadow-lg"
+  class="btn-dark-default text-light-default position-fixed shadow-lg"
   id="myBtn2"
   title="Go to bottom"
 >
@@ -135,7 +135,7 @@
             placeholder="Height"
           />
         </div>
-        <button type="submit" class="btn btn-primary insert-submit-btn">
+        <button type="submit" class="btn-primary-default insert-submit-btn">
           Submit
         </button>
       </div>
@@ -258,14 +258,14 @@
           placeholder="Height"
         />
       </div>
-      <button type="submit" class="btn btn-primary submit-btn">Submit</button>
+      <button type="submit" class="btn-primary-default submit-btn">Submit</button>
     </div>
   </div>
 </div>
 
 <div class="container-fluid w-75 my-5">
   <table class="table">
-    <thead class="text-light bg-primary">
+    <thead class="text-light bg-primary-default">
       <tr>
         <th onclick="sortTable(0)" scope="col">Product ID</th>
         <th onclick="sortTable(1)" scope="col">Product Name</th>
@@ -287,7 +287,7 @@
                       var table=``;
           console.log((data.rows))
                        data.rows.forEach(row => {
-                          table += `<tr>
+                          table += `<tr class="text-light-default">
                     <td><strong>${row.product_id}</strong></td>
                     <td>${row.product_name}</td>
                   <td>${row.brand}</td>
@@ -295,7 +295,7 @@
                        <td>${row.length}</td>
                           <td>${row.width}</td>
                     <td>${row.height}</td>
-                     <td scope="col"><button type="button" data-product=${row.product_id} class="btn btn-modal" data-bs-toggle="modal" data-bs-target="#editModal" style="background-color:#003366">
+                     <td scope="col"><button type="button" data-product=${row.product_id} class="btn-modal" data-bs-toggle="modal" data-bs-target="#editModal" style="background-color:#003366">
                       <i data-product=${row.product_id} class="fa-solid fa-pen-to-square btn-modal text-light"></i>
                     </button>
                     </td>

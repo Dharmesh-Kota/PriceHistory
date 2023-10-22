@@ -4,7 +4,7 @@
 
 <button
   type="button"
-  class="btn btn-primary btn-insert-modal position-fixed"
+  class="btn-dark-default btn-insert-modal position-fixed"
   data-bs-toggle="modal"
   data-bs-target="#insertModal"
   title="Create new user"
@@ -16,7 +16,7 @@
 <button
   onclick="topFunction()"
   style="right: 2em; bottom: 6em; display: none"
-  class="btn btn-dark text-light position-fixed shadow-lg"
+  class=" btn-dark-default text-light-default position-fixed shadow-lg"
   id="myBtn"
   title="Go to top"
 >
@@ -26,7 +26,7 @@
 <button
   onclick="bottomFunction()"
   style="right: 2em; bottom: 1em"
-  class="btn btn-dark text-light position-fixed shadow-lg"
+  class=" btn-dark-default text-light-default position-fixed shadow-lg"
   id="myBtn2"
   title="Go to bottom"
 ><i class="fa-solid fa-chevron-down"></i>
@@ -44,7 +44,7 @@
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content p-5">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="insertModalLabel">
+          <h1 class="modal-title text-dark-default fs-5" id="insertModalLabel">
             Insert User
           </h1>
           <button
@@ -105,7 +105,7 @@
             placeholder="Postal Code"
           />
         </div>
-        <button type="submit" class="btn btn-primary insert-submit-btn">
+        <button type="submit" class=" btn-primary-default insert-submit-btn" style="background-color: #007bff;">
           Submit
         </button>
       </div>
@@ -132,7 +132,7 @@
           aria-label="Close"
         ></button>
       </div>
-      <div class="mb-3">
+      <div class="mb-3 btn-primary-default">
         <label for="user_id" class="form-label">User ID</label>
         <input
           type="text"
@@ -174,7 +174,7 @@
           name="postal_code"
         />
       </div>
-      <button type="submit" class="btn btn-primary submit-btn">
+      <button type="submit" class="btn-primary submit-btn">
         Submit
       </button>
     </div>
@@ -183,7 +183,7 @@
 
 <div class="container-fluid w-75 my-5">
   <table class="table">
-    <thead class="text-light bg-primary">
+    <thead class="text-light bg-primary-default">
       <tr>
         <th onclick="sortTable(0)" scope="col">User ID</th>
         <th onclick="sortTable(1)" scope="col">User Email</th>
@@ -205,7 +205,7 @@
   var table=``;
   data.rows.forEach(row => {
       table +=
-      `<tr>
+      `<tr class="text-light-default">
           <td scope="col"><strong>${row.user_id}</strong></td>
           <td scope="col">${row.user_email}</td>
           <td scope="col">${row.user_password}</td>
