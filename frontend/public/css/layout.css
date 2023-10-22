@@ -26,10 +26,7 @@
     --bg-default: #333; 
 }
 
-.dark-theme {
-    background-color: var(--bg-color);
-    color: var(--text-color);
-}
+
 .bg-default{
     background-color: var(--bg-default);
     color: var(--text-color);
