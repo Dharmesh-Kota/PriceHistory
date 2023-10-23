@@ -78,3 +78,6 @@
 .border-dark-default{
     border-color: var(--btn-border)!important;
 }
+.text-color{
+    color: var(--text-color);
+}

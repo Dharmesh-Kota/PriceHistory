@@ -192,7 +192,7 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content p-5">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="historyModalLabel">User's Past Purchase History</h1>
+        <h1 class="modal-title fs-5 text-dark-default" id="historyModalLabel">User's Past Purchase History</h1>
         <button
           type="button"
           class="btn-close"
@@ -255,7 +255,7 @@
               title="Past Purchase History"
               style="right: 2em; bottom: 3.5em"
             >
-              <i class="fa-solid fa-history"></i>
+              <i class="fa-solid fa-history text-color"></i>
             </button>
           </td>
         </tr>`
@@ -330,7 +330,7 @@ document.addEventListener("DOMContentLoaded", function() {
       var history = <%- JSON.stringify(history) %>;
       history.rows.forEach((row) => {
         if (row.user_id === userId) {
-          modalContent.innerHTML += `<li>${row.product_id}</li>`;
+          modalContent.innerHTML += `<li class="text-dark" style="list-style: none">${row.product_id}</li>`;
         }
       });
     });
