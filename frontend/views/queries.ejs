@@ -1,29 +1,29 @@
-    <title>Queries</title>
-    <link rel="stylesheet" href="./css/products.css" />
+<title>Queries</title>
+<link rel="stylesheet" href="/css/products.css">
 
 
-<div class="container-fluid w-50 my-5">
-  <form action="/queries" method="post">
+<div class="container-fluid w-50 my-5 text-light-default">
+  <form action="/queries" method="post" >
     <div class="form-floating">
       <textarea
-        class="form-control font-monospace border border-3 border-dark"
+        class="form-control font-monospace text-dark-default border border-3 border-dark-default"
         placeholder="Leave a comment here"
         id="floatingTextarea"
         style="height: 200px"
         name="query"
       ></textarea>
-      <label for="floatingTextarea">Write Your Query Here</label>
+      <label for="floatingTextarea" class="text-dark">Write Your Query Here</label>
     </div>
-    <button class="btn-primary btn my-5" type="submit">Run Query</button>
+    <button class="btn-primary-default my-5" type="submit">Run Query</button>
   </form>
   <h4
-    class="bg-success font-monospace query-msg p-3 rounded-3 border border-3 border-dark text-light font-weight-bold text-center shadow-lg"
+    class="bg-success-default font-monospace query-msg p-3 rounded-3 border border-3 border-dark-default text-light-default font-weight-bold text-center shadow-lg"
   ></h4>
 </div>
 <button
   onclick="topFunction()"
   style="right: 2em; bottom: 6em; display: none"
-  class="btn btn-dark text-light position-fixed shadow-lg"
+  class="btn-dark-default text-light-default position-fixed shadow-lg"
   id="myBtn"
   title="Go to top"
 >
@@ -33,7 +33,7 @@
 <button
   onclick="bottomFunction()"
   style="right: 2em; bottom: 3em"
-  class="btn btn-dark text-light position-fixed shadow-lg"
+  class="btn-dark-default text-light-default position-fixed shadow-lg"
   id="myBtn2"
   title="Go to bottom"
 >
@@ -41,8 +41,8 @@
 </button>
 
 <div class="container-fluid w-75">
-  <table class="table bg-dark text-light fw-bold">
-    <thead class="bg-primary">
+  <table class="table">
+    <thead class="text-light bg-primary-default">
       <tr></tr>
     </thead>
   </table>
@@ -123,7 +123,7 @@
           tablerow.push(i.name)
           for(let i of tablerow)
           tabledata += `<td>${row[i]}</td>`
-        document.querySelector('.table').innerHTML += `<tr>
+        document.querySelector('.table').innerHTML += `<tr class="text-light-default">
                                                         ${tabledata}
                                                       </tr>`
       })
