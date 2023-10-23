@@ -181,6 +181,34 @@
   </div>
 </div>
 
+<!-- Modal for User's Past Purchase History -->
+<div
+  class="modal fade"
+  id="historyModal"
+  tabindex="-1"
+  aria-labelledby="historyModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content p-5">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="historyModalLabel">User's Past Purchase History</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div>
+        <ul class="container modal-body">
+
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="container-fluid w-75 my-5">
   <table class="table">
     <thead class="text-light bg-primary">
@@ -191,6 +219,7 @@
         <th onclick="sortTable(3)" scope="col">User Postal Code</th>
         <th scope="col">Edit User</th>
         <th scope="col">Delete User</th>
+        <th scope="col">Purchase Hisory</th>
       </tr>
     </thead>
   </table>
@@ -201,7 +230,6 @@
 
 <script>
   var data = <%- JSON.stringify(data) %>;
-  console.log(data.rows)
   var table=``;
   data.rows.forEach(row => {
       table +=
@@ -216,6 +244,19 @@
           </td>
           <td scope="col">
               <i role="button" data-user=${row.user_id} class="fa-solid border border-danger border-2 rounded-3 fa-trash text-danger btn-delete p-2" ></i>
+          </td>
+          <td scope="col">
+            <button
+              type="button"
+              data-user=${row.user_id}
+              class="btn-primary-default btn btn-modal"
+              data-bs-toggle="modal"
+              data-bs-target="#historyModal"
+              title="Past Purchase History"
+              style="right: 2em; bottom: 3.5em"
+            >
+              <i class="fa-solid fa-history"></i>
+            </button>
           </td>
         </tr>`
 });
@@ -275,11 +316,31 @@ function sortTable(n) {
   }
 }
 
+document.addEventListener("DOMContentLoaded", function() {
+  var historyButtons = document.querySelectorAll('[data-bs-target="#historyModal"]');
+
+  historyButtons.forEach(function(historyButton) {
+    historyButton.addEventListener("click", function(event) {
+      event.preventDefault();
+
+      var userId = historyButton.getAttribute("data-user");
+
+      var modalContent = document.querySelector("#historyModal .modal-body");
+      modalContent.innerHTML = "";
+      var history = <%- JSON.stringify(history) %>;
+      history.rows.forEach((row) => {
+        if (row.user_id === userId) {
+          modalContent.innerHTML += `<li>${row.product_id}</li>`;
+        }
+      });
+    });
+  });
+});
+
 
 document.querySelector('.table').innerHTML += table;
   var response = {};
   document.querySelectorAll('.btn-modal').forEach((row)=>row.addEventListener('click', (e)=>{
-    console.log(row)
     let obj = undefined;
     data.rows.forEach((row)=> {
       if(row.user_id === e.target.dataset.user)
@@ -329,7 +390,6 @@ document.querySelectorAll('.btn-delete').forEach((row)=>{
               'Content-type' :"application/json"
             }
           }).then((response)=>{
-            console.log(response);
             if(confirm(`User ${id} deleted successfully`))
             {
               location.reload();
@@ -357,12 +417,12 @@ function scrollFunction() {
 }
 
 // When the user clicks on the button, scroll to the top of the document
-function topFunction() {
+  function topFunction() {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
   }
 
-    function bottomFunction() {
+  function bottomFunction() {
     document.body.scrollTop = 10024;
     document.documentElement.scrollTop = 10024;
   }
