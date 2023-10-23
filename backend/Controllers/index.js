@@ -197,6 +197,46 @@ const runQuery = (req, res) => {
     .catch((err) => res.json(err));
 };
 
+const schema = (req, res) => {
+  pool
+    .query(
+      "SELECT table_name, column_name, data_type FROM information_schema.columns WHERE table_schema = 'public'"
+    )
+    .then((response) => {
+      console.log("Schema fetched successfully");
+
+      // Group the columns by table name
+      const groupedSchema = groupColumnsByTable(response.rows);
+
+      res.json(groupedSchema);
+    })
+    .catch((err) => res.json(err));
+};
+
+function groupColumnsByTable(rows) {
+  const groupedSchema = {};
+
+  rows.forEach((entry) => {
+    const tableName = entry.table_name;
+    const columnInfo = {
+      column_name: entry.column_name,
+      data_type: entry.data_type,
+    };
+
+    if (!groupedSchema[tableName]) {
+      groupedSchema[tableName] = [];
+    }
+
+    groupedSchema[tableName].push(columnInfo);
+  });
+
+  return groupedSchema;
+}
+
+const schemaVisualizer = (req, res) => {
+  return res.render("schema");
+}
+
 module.exports = {
   getHome,
   getUsers,
@@ -211,4 +251,6 @@ module.exports = {
   updateProduct,
   getQuery,
   runQuery,
+  schema,
+  schemaVisualizer
 };
