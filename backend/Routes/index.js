@@ -15,6 +15,8 @@ const {
   updateProduct,
   getQuery,
   runQuery,
+  schema,
+  schemaVisualizer
 } = require("../Controllers/index");
 
 router.get("/", getHome);
@@ -30,5 +32,7 @@ router.delete("/products/:id", deleteProduct);
 router.put("/products/:id", updateProduct);
 router.get("/queries", getQuery);
 router.post("/queries", runQuery);
+router.get("/schema", schema);
+router.get("/schema-visualizer", schemaVisualizer);
 
 module.exports = router;
