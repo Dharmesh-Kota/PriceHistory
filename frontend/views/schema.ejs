@@ -1,0 +1,40 @@
+<title>Schema Visualization</title>
+<link rel="stylesheet" href="/css/schema.css">
+
+<div class="schema-visualization-container text-dark" id="schema-visualization">
+  <!-- Tables will be dynamically added here -->
+</div>
+
+<script>
+  fetch("/schema")
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("Success:", data);
+
+      for (const tableName in data) {
+        const tableData = data[tableName];
+
+        const tableContainer = document.createElement("div");
+        tableContainer.classList.add("table-container");
+
+        const tableTitle = document.createElement("h2");
+        tableTitle.textContent = tableName;
+
+        tableContainer.appendChild(tableTitle);
+
+        tableData.forEach((attribute) => {
+          const attributeInfo = document.createElement("p");
+          attributeInfo.textContent = `${attribute.column_name} (${attribute.data_type})`;
+          tableContainer.appendChild(attributeInfo);
+        });
+
+        document
+          .getElementById("schema-visualization")
+          .appendChild(tableContainer);
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+</script>
+

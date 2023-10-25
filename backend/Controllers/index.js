@@ -39,22 +39,24 @@ const getHome = (req, res) => {
     .catch((err) => res.json(err));
 };
 
-const getUsers = async function (req, res) {
+const getUsers = async function (req, res){
+  
   try {
-    const users = await pool.query(`select * from users order by user_id asc`);
-    const products = await pool.query(`select * from product order by product_id asc`);
-    const buys = await pool.query(`select * from buys order by user_id asc`);
+    const users = await pool.query('select * from users order by user_id asc');    
+    console.log("users get successfully");
+    const history = await pool.query('select * from buys order by user_id asc');
+    console.log("history get successfully");
     
-    return res.render('users', {
-      data: users,
-      products: products,
-      buys: buys
+    return res.render("users", {
+        data: users,
+        history: history
     });
 
   } catch (error) {
-    console.log('Error: ', error);
-    return res.status(500).json({ message: 'Internal Server Error' });
+    console.log("Error: ",error);
+    return res.status(500).json({message: "Internal Server Error"});
   }
+    
 };
 
 const getUserById = (req, res) => {
@@ -195,6 +197,46 @@ const runQuery = (req, res) => {
     .catch((err) => res.json(err));
 };
 
+const schema = (req, res) => {
+  pool
+    .query(
+      "SELECT table_name, column_name, data_type FROM information_schema.columns WHERE table_schema = 'public'"
+    )
+    .then((response) => {
+      console.log("Schema fetched successfully");
+
+      // Group the columns by table name
+      const groupedSchema = groupColumnsByTable(response.rows);
+
+      res.json(groupedSchema);
+    })
+    .catch((err) => res.json(err));
+};
+
+function groupColumnsByTable(rows) {
+  const groupedSchema = {};
+
+  rows.forEach((entry) => {
+    const tableName = entry.table_name;
+    const columnInfo = {
+      column_name: entry.column_name,
+      data_type: entry.data_type,
+    };
+
+    if (!groupedSchema[tableName]) {
+      groupedSchema[tableName] = [];
+    }
+
+    groupedSchema[tableName].push(columnInfo);
+  });
+
+  return groupedSchema;
+}
+
+const schemaVisualizer = (req, res) => {
+  return res.render("schema");
+}
+
 module.exports = {
   getHome,
   getUsers,
@@ -209,4 +251,6 @@ module.exports = {
   updateProduct,
   getQuery,
   runQuery,
+  schema,
+  schemaVisualizer
 };
