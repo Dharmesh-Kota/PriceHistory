@@ -200,6 +200,8 @@
 
 
 <script>
+
+  <!-- Displaying the Table -->
   var data = <%- JSON.stringify(data) %>;
   console.log(data.rows)
   var table=``;
@@ -220,6 +222,7 @@
         </tr>`
 });
 
+<!-- Sort function for each table column -->
 function sortTable(n) {
     var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
     table = document.querySelector('.table');
@@ -366,5 +369,13 @@ function topFunction() {
     document.body.scrollTop = 10024;
     document.documentElement.scrollTop = 10024;
   }
+
+  <!-- Recommendation Logic -->
+  
+  var users = <%- JSON.stringify(data) %>;
+  var products = <%- JSON.stringify(products) %>;
+  var buys = <%- JSON.stringify(buys) %>;
+  
+
 </script>
 
