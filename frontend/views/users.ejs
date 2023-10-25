@@ -431,11 +431,28 @@ function scrollFunction() {
   }
 
   <!-- Recommendation Logic -->
-  
-  var users = <%- JSON.stringify(data) %>;
-  var products = <%- JSON.stringify(products) %>;
-  var buys = <%- JSON.stringify(buys) %>;
-  
+
+  document.addEventListener('DOMContentLoaded', function(){
+    var users = <%- JSON.stringify(data) %>;
+    var products = <%- JSON.stringify(products) %>;
+    var history = <%- JSON.stringify(history) %>;
+    var rating = <%- JSON.stringify(rating) %>;
+    
+    var historyButtons = document.querySelectorAll('[data-bs-target="#historyModal"]');
+
+    historyButtons.forEach(function(historyButton) {
+      historyButton.addEventListener("click", function(event) {
+        event.preventDefault();
+
+        var userId = historyButton.getAttribute("data-user");
+
+        var modalContent = document.querySelector("#historyModal .modal-body");
+        
+        const ratedProducts = [];
+
+      });
+    });
+  });
 
 </script>
 
