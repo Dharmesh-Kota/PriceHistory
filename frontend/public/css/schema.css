@@ -1,6 +1,7 @@
 .schema-visualization-container {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .table-container {
