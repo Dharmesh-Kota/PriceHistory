@@ -39,14 +39,22 @@ const getHome = (req, res) => {
     .catch((err) => res.json(err));
 };
 
-const getUsers = (req, res) => {
-  pool
-    .query(`select * from users order by user_id asc`)
-    .then((results) => {
-      console.log("users get successfully");
-      res.render("users", { data: results });
-    })
-    .catch((e) => res.json(e));
+const getUsers = async function (req, res) {
+  try {
+    const users = await pool.query(`select * from users order by user_id asc`);
+    const products = await pool.query(`select * from product order by product_id asc`);
+    const buys = await pool.query(`select * from buys order by user_id asc`);
+    
+    return res.render('users', {
+      data: users,
+      products: products,
+      buys: buys
+    });
+
+  } catch (error) {
+    console.log('Error: ', error);
+    return res.status(500).json({ message: 'Internal Server Error' });
+  }
 };
 
 const getUserById = (req, res) => {
