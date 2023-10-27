@@ -4,32 +4,32 @@
 
 <button
   type="button"
-  class="btn-dark-default btn-insert-modal position-fixed"
+  class="btn btn-insert-modal position-fixed"
   data-bs-toggle="modal"
   data-bs-target="#insertModal"
   title="Create new user"
-  style="right: 2em; bottom: 3.5em"
+  style="right: 2em; bottom: 3.5em; background-color:var(--btn-bg)"
 >
-  <i class="fa-solid fa-plus btn-insert-modal"></i>
+  <i class="fa-solid fa-plus btn-insert-modal" style="color: var(--bg-color);"></i>
 </button>
 
 <button
   onclick="topFunction()"
-  style="right: 2em; bottom: 6em; display: none"
-  class=" btn-dark-default text-light-default position-fixed shadow-lg"
+  style="right: 2em; bottom: 6em; display: none; background-color:var(--btn-bg)"
+  class=" btn position-fixed shadow-lg"
   id="myBtn"
   title="Go to top"
 >
-  <i class="fa-solid fa-chevron-up"></i>
+  <i class="fa-solid fa-chevron-up" style="color: var(--bg-color);"></i>
 </button>
 
 <button
   onclick="bottomFunction()"
-  style="right: 2em; bottom: 1em"
-  class=" btn-dark-default text-light-default position-fixed shadow-lg"
+  style="right: 2em; bottom: 1em; background-color:var(--btn-bg)"
+  class=" btn position-fixed shadow-lg"
   id="myBtn2"
   title="Go to bottom"
-><i class="fa-solid fa-chevron-down"></i>
+><i class="fa-solid fa-chevron-down" style="color: var(--bg-color);"></i>
 </button>
 
 <form action="/users" method="post">
@@ -257,7 +257,7 @@
               title="Past Purchase History"
               style="right: 2em; bottom: 3.5em"
             >
-              <i class="fa-solid fa-history text-color"></i>
+              <i class="fa-solid fa-history text-color border border-2 rounded-3 fa-trash btn-delete p-2"></i>
             </button>
           </td>
         </tr>`
