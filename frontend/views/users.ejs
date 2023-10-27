@@ -192,7 +192,7 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content p-5">
       <div class="modal-header">
-        <h1 class="modal-title fs-5 text-dark-default" id="historyModalLabel">User's Past Purchase History</h1>
+        <h1 class="modal-title fs-5 text-dark-default" id="historyModalLabel">Purchase History</h1>
         <button
           type="button"
           class="btn-close"
@@ -237,7 +237,7 @@
       table +=
       `<tr class="text-light-default">
           <td scope="col"><strong>${row.user_id}</strong></td>
-          <td scope="col">${row.user_email}</td>
+          <td scope="col">${row.email}</td>
           <td scope="col">${row.user_password}</td>
           <td scope="col">${row.postal_code}</td>
           <td scope="col"><button type="button" data-user=${row.user_id} class="btn btn-modal" data-bs-toggle="modal" data-bs-target="#editModal" style="background-color:#003366">
@@ -330,10 +330,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
       var modalContent = document.querySelector("#historyModal .modal-body");
       modalContent.innerHTML = "";
+      
       var history = <%- JSON.stringify(history) %>;
       history.rows.forEach((row) => {
         if (row.user_id === userId) {
-          modalContent.innerHTML += `<li class="text-dark" style="list-style: none">${row.product_id}</li>`;
+          modalContent.innerHTML += `<li class="text-dark" style="list-style: none">Product ID: ${row.product_id}</li>`;
         }
       });
     });
@@ -435,10 +436,29 @@ function scrollFunction() {
   document.addEventListener('DOMContentLoaded', function(){
     var users = <%- JSON.stringify(data) %>;
     var products = <%- JSON.stringify(products) %>;
+    var productRows = [];
+    products.rows.forEach((row) => {
+      productRows.push(row);
+    })
     var history = <%- JSON.stringify(history) %>;
-    var rating = <%- JSON.stringify(rating) %>;
+    var ratings = <%- JSON.stringify(rating) %>;
     
     var historyButtons = document.querySelectorAll('[data-bs-target="#historyModal"]');
+
+    const productRatings = [];
+    products.rows.forEach((product) => {
+      count = 0;
+      sum = 0;
+      ratings.rows.forEach((rating) => {
+        if (rating.product_id === product.product_id) {
+          count++;
+          sum += rating.rating;
+        }
+      });
+      productRatings.push({ product_id: product.product_id, rating: sum / count });
+    });
+
+    <!-- console.log(productRatings); -->
 
     historyButtons.forEach(function(historyButton) {
       historyButton.addEventListener("click", function(event) {
@@ -447,8 +467,56 @@ function scrollFunction() {
         var userId = historyButton.getAttribute("data-user");
 
         var modalContent = document.querySelector("#historyModal .modal-body");
+        modalContent.innerHTML += `<h1 class="modal-title modal-header fs-5 text-dark-default" id="historyModalLabel" style="margin-left: -20px;">Recommendations</h1>`;
+        <!-- Rating based Recommendation -->
+
+          modalContent.innerHTML += `<h5 class="text-dark-default" style="margin-top: 15px;">High Rated Products</h5>`;
+          var rating = productRatings;
+
+          var userHistory = [];
+          history.rows.forEach((row) => {
+            if (row.user_id === userId) {
+              userHistory.push(row.product_id);
+            }
+          });
+          
+          var userRecommendations = [];
+          rating.forEach((rating) => {
+            if (userHistory.includes(rating.product_id)) {
+              return;
+            }
+            userRecommendations.push(rating);
+          });
+
+          userRecommendations.sort((a, b) => (b.rating - a.rating));
+
+          userRecommendations.forEach((recommendation) => {
+            if(recommendation.rating > 7){
+              modalContent.innerHTML += `<li class="text-dark" style="list-style: none">Product ID: ${recommendation.product_id}</li>`;
+            }
+          });
+
+          <!-- Brand based recommendation not possible because a given brand is associated with a single product only -->
         
-        const ratedProducts = [];
+          <!-- Attributes based Recommendation -->
+  
+          modalContent.innerHTML += `<h5 class="text-dark-default">Similar Products</h5>`;
+          var productRecommendation = [];
+          userHistory.forEach((prod) => {
+            var product1 = products.rows.find(item => prod === item.product_id);
+            userRecommendations.forEach((recommendation) => {
+              var product2 = products.rows.find(item => recommendation.product_id === item.product_id);
+              var similarityMeasure = Math.sqrt(Math.pow((product1.weight - product2.weight), 2) + Math.pow((product1.length - product2.length), 2) + Math.pow((product1.width - product2.width), 2) + Math.pow((product1.height - product2.height), 2));
+              if(similarityMeasure < 25){
+                productRecommendation.push({ product_id: recommendation.product_id, similarity: similarityMeasure });
+              }
+            });
+          });
+          productRecommendation.sort((a, b) => (a.similarity - b.similarity));
+
+          productRecommendation.forEach((recommendation) => {
+            modalContent.innerHTML += `<li class="text-dark" style="list-style: none">Product ID: ${recommendation.product_id}</li>`;
+          });
 
       });
     });
@@ -456,3 +524,26 @@ function scrollFunction() {
 
 </script>
 
+
+<!-- 
+  Rating: ${rating.find(item => item.product_id === recommendation.product_id).rating}
+ -->
+
+   
+<!-- Brand Based Recommendation
+
+modalContent.innerHTML += `<h5 class="text-dark-default">Products from Brand you might like</h5>`;
+var brands = [];
+userHistory.forEach((row) => {
+  brands.push((productRows.find(item => item.product_id === row)).brand);
+});
+
+brandRecommendation = [];
+brands.forEach((brand) => {
+  userRecommendations.forEach((recommendation) => {
+    var prod = products.rows.find(item => item.product_id === recommendation.product_id);
+    console.log(brand);
+  });
+
+  console.log(brandRecommendation);
+}); -->
