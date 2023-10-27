@@ -52,17 +52,3 @@
   </div>
 </nav>
 
-<script>
-  const themeToggle = document.querySelector(".theme-toggle");
-  themeToggle.addEventListener("click", () => {
-    document.body.classList.toggle("light-mode");
-    themeToggle.innerHTML = document.body.classList.contains("light-mode")
-      ? `<i class="fas fa-moon"></i>`
-      : `<i class="fas fa-sun"></i>`;
-  });
-  if(document.body.classList.contains("light-mode")){
-    themeToggle.innerHTML = `<i class="fas fa-moon"></i>`;
-  } else {
-    themeToggle.innerHTML = `<i class="fas fa-sun"></i>`;
-  }
-</script>
