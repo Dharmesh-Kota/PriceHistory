@@ -48,5 +48,36 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.4.1/backbone.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jointjs/3.7.5/joint.js"></script>
 
+    <script>
+      document.addEventListener('DOMContentLoaded', function(){
+        const themeToggle = document.querySelector(".theme-toggle");
+      
+        var themeMode = localStorage.getItem("themeMode");
+        if(themeMode === null){
+          localStorage.setItem("themeMode", "dark-mode");
+        } else if(themeMode === "light-mode") {
+          document.body.classList.add("light-mode");
+          themeToggle.innerHTML = `<i class="fas fa-moon"></i>`;
+          localStorage.setItem("themeMode", "light-mode");
+        }
+        
+        themeToggle.addEventListener("click", () => {
+          themeMode = localStorage.getItem("themeMode");
+          if(themeMode === "dark-mode"){
+            document.body.classList.add("light-mode");
+            themeToggle.innerHTML = `<i class="fas fa-moon"></i>`;
+            localStorage.setItem("themeMode", "light-mode");
+          } else {
+            document.body.classList.remove("light-mode");
+            themeToggle.innerHTML = `<i class="fas fa-sun"></i>`;
+            localStorage.setItem("themeMode", "dark-mode");
+          }
+          
+        });
+      });
+      
+      
+    </script>
+
   </body>
 </html>
